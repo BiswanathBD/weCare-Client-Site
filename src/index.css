@@ -1,0 +1,58 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+@import "tailwindcss";
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
+.btn-primary {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(to right, #ad70e9, #ed6fae);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* ✨ Hover Glow Effect */
+.btn-primary:hover {
+  opacity: 0.95;
+  box-shadow: 0 0 40px rgba(255, 85, 255, 0.3);
+}
+
+.btn-secondary {
+  border: 1px solid #ed6fae;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  opacity: 0.95;
+  box-shadow: 0 0 20px rgba(255, 85, 255, 0.3);
+}
+
+input{
+  outline: none;
+}
+@keyframes spin-once {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin-once {
+  animation: spin-once 1s cubic-bezier(0.60, 0, 0.60, 1) 1;
+}
+
+.footer-nav a{
+  padding: 8px;
+  border: 1px solid #ed6fae7b;
+  border-radius: 100%;
+}
