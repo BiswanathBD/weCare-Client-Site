@@ -2,12 +2,13 @@ import React, { useContext } from "react";
 import { motion } from "motion/react";
 import { AuthContext } from "../Context/AuthContext";
 import heroImg from "../assets/hero.webp";
+import { Link } from "react-router";
 
 const Hero = () => {
   const { isDark } = useContext(AuthContext);
 
   return (
-    <section className="relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-10 py-16 md:py-24 container mx-auto px-4 md:px-10 lg:px-20 rounded-xl border border-pink-400/10">
+    <section className="relative  flex flex-col md:flex-row items-center justify-between gap-10 py-16 md:py-16 container mx-auto px-4 md:px-10 lg:px-20 rounded-xl border-pink-400/10">
       {/* animation circle */}
       <div className="absolute -top-20 -left-20 w-72 h-72 bg-pink-400/30 rounded-full blur-3xl animate-pulse"></div>
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-200/20 rounded-full blur-3xl animate-pulse"></div>
@@ -35,12 +36,22 @@ const Hero = () => {
         </p>
 
         <div className="flex flex-wrap justify-center md:justify-start gap-4">
+          <Link to={"/createEvent"}>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.97 }}
+              className="btn-primary hidden md:block px-6! py-3! rounded-xl! transition-all w-fit"
+            >
+              Create Event
+            </motion.button>
+          </Link>
+
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.97 }}
-            className="btn-primary px-6! py-3! rounded-xl! transition-all w-full sm:w-auto"
+            className="btn-primary md:hidden px-6! py-3! rounded-xl! transition-all w-fit"
           >
-            Create Event
+            Upcoming Events
           </motion.button>
 
           <motion.button
@@ -52,7 +63,7 @@ const Hero = () => {
                 : "border-pink-400/50 text-pink-500 hover:bg-pink-100/60"
             } transition-all`}
           >
-            All Events
+            Learn More
           </motion.button>
         </div>
       </motion.div>

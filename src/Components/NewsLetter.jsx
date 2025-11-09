@@ -12,11 +12,11 @@ const Newsletter = () => {
 
   return (
     <div className="flex justify-center items-center py-12 px-4 ">
-      <div className="w-full rounded-3xl bg-white/5 p-8 flex flex-col md:flex-row items-center justify-between gap-8 border border-pink-400/20">
+      <div className="w-full rounded-3xl bg-white/5 p-8 flex flex-col md:flex-row items-center justify-between gap-8">
         <div className="flex justify-center">
           <img
             src={newsletterImg}
-            alt="Newsletter Illustration"
+            alt="Newsletter"
             className="w-full object-cover rounded-2xl shadow-lg"
           />
         </div>
