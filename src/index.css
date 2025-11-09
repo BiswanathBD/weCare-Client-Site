@@ -36,7 +36,7 @@ body {
   box-shadow: 0 0 20px rgba(255, 85, 255, 0.3);
 }
 
-input{
+input {
   outline: none;
 }
 @keyframes spin-once {
@@ -48,11 +48,50 @@ input{
   }
 }
 .animate-spin-once {
-  animation: spin-once 1s cubic-bezier(0.60, 0, 0.60, 1) 1;
+  animation: spin-once 1s cubic-bezier(0.6, 0, 0.6, 1) 1;
 }
 
-.footer-nav a{
+.footer-nav a {
   padding: 8px;
   border: 1px solid #ed6fae7b;
   border-radius: 100%;
 }
+
+.swal2-popup {
+  width: fit-content;
+  padding: 1rem !important;
+  border-radius: 0.75rem !important;
+  background: rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(247, 85, 247, 0.3);
+  box-shadow: 0 0 25px rgba(242, 85, 247, 0.352);
+  color: #e5e7eb !important;
+}
+
+.swal2-title {
+  font-size: 24px !important;
+  color: #e5e7eb !important;
+}
+
+.create-event input,
+.create-event select,
+.create-event textarea {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #c084fc25;
+}
+
+.create-event input:focus,
+.create-event select:focus,
+.create-event textarea:focus {
+  outline: none;
+  border: 1px solid #c084fc7d;
+}
+
+.react-datepicker-wrapper,
+.react-datepicker__input-container input {
+  width: 100%;
+}
+

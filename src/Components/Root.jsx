@@ -22,6 +22,7 @@ const Root = () => {
       <Navbar />
 
       <motion.nav
+        className="grow container mx-auto px-4 md:px-10 lg:px-20 my-4"
         initial={{ opacity: 0, y: 25 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{
@@ -29,9 +30,7 @@ const Root = () => {
           ease: [0.25, 0.1, 0.25, 1],
         }}
       >
-        <div className="grow container mx-auto px-4 md:px-10 lg:px-20 my-4">
-          <Outlet />
-        </div>
+        <Outlet />
       </motion.nav>
 
       <Footer />

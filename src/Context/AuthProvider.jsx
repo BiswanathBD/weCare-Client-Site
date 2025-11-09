@@ -14,7 +14,6 @@ const googleProvider = new GoogleAuthProvider();
 const AuthProvider = ({ children }) => {
   const [isDark, setIsDark] = useState(true);
   const [user, setUser] = useState(null);
-  console.log(user);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

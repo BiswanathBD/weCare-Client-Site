@@ -3,6 +3,7 @@ import { motion } from "motion/react";
 import { AuthContext } from "../Context/AuthContext";
 import heroImg from "../assets/hero.webp";
 import { Link } from "react-router";
+import Swal from "sweetalert2";
 
 const Hero = () => {
   const { isDark } = useContext(AuthContext);
@@ -55,6 +56,14 @@ const Hero = () => {
           </motion.button>
 
           <motion.button
+            onClick={() =>
+              Swal.fire({
+                title: "Registration Successful",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 1500,
+              })
+            }
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.97 }}
             className={`px-6 py-3 rounded-xl font-semibold border ${
