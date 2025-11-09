@@ -24,6 +24,7 @@ const Navbar = () => {
 
   return (
     <motion.nav
+    className="sticky top-0 backdrop-blur-3xl z-50"
       initial={{ opacity: 0, y: -25 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
@@ -31,7 +32,7 @@ const Navbar = () => {
         ease: [0.25, 0.1, 0.25, 1],
       }}
     >
-      <div className="container mx-auto px-4 md:px-10 lg:px-20 my-2 flex justify-between items-center">
+      <div className="container mx-auto px-4 md:px-10 lg:px-20 my-4 flex justify-between items-center">
         {/* Logo */}
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
