@@ -138,6 +138,7 @@ const Navbar = () => {
               </Link>
 
               <Link
+                to={`/joinedEvent/user/${user.email}`}
                 onClick={() => setDropShow(!dropShow)}
                 className="flex items-center gap-2"
               >
