@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import logo from "../assets/logo.png";
 import profile from "../assets/profile.png";
 import { Link, NavLink } from "react-router";
@@ -18,16 +18,15 @@ const Navbar = () => {
   const { user, setUser, loading, logOut, isDark } = useContext(AuthContext);
   const [dropShow, setDropShow] = useState(false);
 
-  
   const handleLogOut = () => {
     logOut()
-    .then(() => {
-      toast.success("You are Logged Out");
-      setUser(null);
-    })
-    .catch((error) => toast.error(error.code));
+      .then(() => {
+        toast.success("You are Logged Out");
+        setUser(null);
+      })
+      .catch((error) => toast.error(error.code));
   };
-  
+
   if (loading) return;
 
   return (
@@ -70,7 +69,7 @@ const Navbar = () => {
           <NavLink className="flex items-center gap-1" to={"/"}>
             <TbHomeFilled size={18} color="#ed6fae" /> <span>Home</span>
           </NavLink>
-          <NavLink className="flex items-center gap-1" to={"/upcomingEvent"}>
+          <NavLink className="flex items-center gap-1" to={"/upcomingEvents"}>
             <BiSolidCalendarWeek size={18} color="#ed6fae" />
             <span>Upcoming Events</span>
           </NavLink>

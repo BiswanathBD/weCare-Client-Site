@@ -3,9 +3,7 @@ import { motion } from "motion/react";
 import { AuthContext } from "../Context/AuthContext";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import toast from "react-hot-toast";
 import axios from "axios";
-import { body } from "motion/react-client";
 
 const CreateEvent = () => {
   const { user } = useContext(AuthContext);
