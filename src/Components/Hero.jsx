@@ -9,10 +9,10 @@ const Hero = () => {
   const { isDark } = useContext(AuthContext);
 
   return (
-    <section className="relative  flex flex-col md:flex-row items-center justify-between gap-10 py-16 md:py-16 container mx-auto px-4 md:px-10 lg:px-20 rounded-xl border-pink-400/10">
+    <section className="relative flex flex-col md:flex-row items-center justify-between gap-10 py-16 container mx-auto px-4 md:px-10 rounded-xl border-pink-400/10">
       {/* animation circle */}
-      <div className="absolute -top-20 -left-20 w-72 h-72 bg-pink-400/30 rounded-full blur-3xl animate-pulse"></div>
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-200/20 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute -top-20 -left-20 w-72 h-72 bg-pink-400/10 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-200/10 rounded-full blur-3xl animate-pulse"></div>
 
       <motion.div
         initial={{ opacity: 0, x: -50 }}
@@ -56,14 +56,6 @@ const Hero = () => {
           </motion.button>
 
           <motion.button
-            onClick={() =>
-              Swal.fire({
-                title: "Registration Successful",
-                icon: "success",
-                showConfirmButton: false,
-                timer: 1500,
-              })
-            }
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.97 }}
             className={`px-6 py-3 rounded-xl font-semibold border ${
@@ -83,13 +75,11 @@ const Hero = () => {
         transition={{ duration: 0.8, delay: 0.2 }}
         className="relative z-10 w-full md:min-w-1/2 flex justify-center"
       >
-        <div
-          className={` relative rounded-full shadow-[0_0_40px_5px_rgba(244,114,182,0.3)]`}
-        >
+        <div className="flex justify-end">
           <img
             src={heroImg}
-            alt="wellness hero"
-            className="border-4 border-pink-300/50 object-contain drop-shadow-[0_0_20px_rgba(244,114,182,0.5)]"
+            alt=""
+            className="border-4 lg:w-4/5 border-pink-300/50 object-contain drop-shadow-[0_0_20px_rgba(244,114,182,0.5)]"
           />
         </div>
       </motion.div>

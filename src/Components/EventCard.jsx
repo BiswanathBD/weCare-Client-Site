@@ -12,8 +12,8 @@ const EventCard = ({ event }) => {
   const { user } = useAuth();
   const axiosInstance = useAxios();
   const [joined, setJoined] = useState(false);
-
   const navigate = useNavigate();
+
   const {
     _id,
     title,
@@ -64,7 +64,7 @@ const EventCard = ({ event }) => {
       className="relative h-full flex flex-col md:flex-row bg-white/5 backdrop-blur-xl border border-purple-400/30 rounded-2xl transition-all duration-300 md:ml-8 w-full mx-auto"
     >
       {/* category tag */}
-      <button className="absolute right-6 bg-purple-800 text-white font-semibold text-sm rounded-full px-2 py-1 top-0 -translate-y-1/2">
+      <button className="absolute right-6 bg-purple-800 text-white font-semibold text-sm rounded-full px-3 py-1 top-0 -translate-y-1/2">
         {category}
       </button>
 
@@ -116,9 +116,7 @@ const EventCard = ({ event }) => {
         {/* Buttons */}
         <div className="flex gap-3 mt-5">
           {joined ? (
-            <motion.button
-              className="flex-1 px-4 py-2 rounded-lg border border-purple-400/40 text-sm font-medium bg-violet-500 text-white text-nowrap transition-all"
-            >
+            <motion.button className="flex-1 px-4 py-2 rounded-lg border border-purple-400/40 text-sm font-medium bg-violet-500 text-white text-nowrap transition-all">
               Joined
             </motion.button>
           ) : (

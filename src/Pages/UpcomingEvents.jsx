@@ -31,7 +31,7 @@ const UpcomingEvents = () => {
       transition={{ duration: 0.4 }}
     >
       <div>
-        <h3 className="text-2xl font-black bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent w-fit mx-auto pb-4">
+        <h3 className="text-3xl font-black bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent w-fit mx-auto pb-4">
           Upcoming Events
         </h3>
         {/* line */}
