@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
+motion;
 import { CalendarDays, MapPin } from "lucide-react";
 import defaultProfile from "../assets/profile.png";
 import defaultThumbnail from "../assets/thumbnail.png";
+import { Link, useNavigate } from "react-router";
+import useAuth from "../Hooks/useAuth";
+import useAxios from "../Hooks/useAxios";
 
 const EventCard = ({ event }) => {
+  const { user } = useAuth();
+  const axiosInstance = useAxios();
+  const [joined, setJoined] = useState(false);
+
+  const navigate = useNavigate();
   const {
+    _id,
     title,
     description,
     category,
@@ -23,14 +33,44 @@ const EventCard = ({ event }) => {
     day: "numeric",
   });
 
+  const handleJoin = (id) => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+    const newJoin = {
+      eventId: id,
+      userEmail: user.email,
+    };
+    console.log(newJoin);
+    axiosInstance
+      .post("/joinEvent", newJoin, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      })
+      .then((res) => {
+        if (res.data.insertedId) {
+          setJoined(true);
+        }
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <motion.div
       whileHover={{ scale: 1.02 }}
-      className="relative flex flex-col md:flex-row bg-white/5 backdrop-blur-xl border border-purple-400/30 rounded-2xl transition-all duration-300 md:ml-8 max-w-lg md:max-w-none mx-auto"
+      className="relative h-full flex flex-col md:flex-row bg-white/5 backdrop-blur-xl border border-purple-400/30 rounded-2xl transition-all duration-300 md:ml-8 w-full mx-auto"
     >
+      {/* category tag */}
+      <button className="absolute right-6 bg-purple-800 text-white font-semibold text-sm rounded-full px-2 py-1 top-0 -translate-y-1/2">
+        {category}
+      </button>
+
       <div className="absolute inset-0 -z-10 bg-linear-to-br from-purple-500/10 via-transparent to-cyan-400/10 blur-2xl opacity-70 rounded-2xl" />
 
-      <div className="relative w-full md:w-3/7 group p-4 md:p-0"> 
+      <div className="relative w-full md:w-3/7 group p-4 md:p-0">
         <img
           className="w-full object-cover rounded-xl aspect-5/3
                      border-3 border-purple-400 shadow-[0_0_25px_rgba(236,72,153,0.6)]
@@ -75,20 +115,31 @@ const EventCard = ({ event }) => {
 
         {/* Buttons */}
         <div className="flex gap-3 mt-5">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            className="flex-1 px-4 py-2 rounded-lg border border-purple-400/40 text-sm font-medium text-purple-600 hover:bg-purple-500/20 hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] transition-all"
-          >
-            View Details
-          </motion.button>
+          {joined ? (
+            <motion.button
+              className="flex-1 px-4 py-2 rounded-lg border border-purple-400/40 text-sm font-medium bg-violet-500 text-white text-nowrap transition-all"
+            >
+              Joined
+            </motion.button>
+          ) : (
+            <motion.button
+              onClick={() => handleJoin(_id)}
+              whileHover={{ scale: 1.05 }}
+              className="flex-1 px-4 py-2 rounded-lg border border-purple-400/40 text-sm font-medium text-purple-600 hover:bg-purple-500/20 hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] transition-all text-nowrap"
+            >
+              Join Event
+            </motion.button>
+          )}
 
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.97 }}
-            className="flex-1 px-4 py-2 rounded-lg bg-linear-to-r from-purple-500 to-pink-500 text-sm text-white font-semibold shadow-lg hover:shadow-[0_0_20px_rgba(236,72,153,0.5)] transition-all"
-          >
-            Join Event
-          </motion.button>
+          <Link to={`/eventDetails/${_id}`} className="grow">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.97 }}
+              className="w-full flex-1 px-4 py-2 rounded-lg bg-linear-to-r from-purple-500 to-pink-500 text-sm text-white font-semibold shadow-lg hover:shadow-[0_0_20px_rgba(236,72,153,0.5)] transition-all"
+            >
+              View Details
+            </motion.button>
+          </Link>
         </div>
       </div>
     </motion.div>

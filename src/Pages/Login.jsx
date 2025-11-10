@@ -12,7 +12,6 @@ const Login = () => {
     useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const { state } = useLocation();
-  console.log(state);
 
   if (user) return <Navigate to={state || "/"} />;
   if (loading) return;

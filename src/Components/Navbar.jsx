@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import logo from "../assets/logo.png";
 import profile from "../assets/profile.png";
 import { Link, NavLink } from "react-router";
@@ -10,12 +10,12 @@ import {
   BiSolidCalendarPlus,
   BiSolidCalendarWeek,
 } from "react-icons/bi";
-import { AuthContext } from "../Context/AuthContext";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
+import useAuth from "../Hooks/useAuth";
 
 const Navbar = () => {
-  const { user, setUser, loading, logOut, isDark } = useContext(AuthContext);
+  const { user, setUser, loading, logOut, isDark } = useAuth();
   const [dropShow, setDropShow] = useState(false);
 
   const handleLogOut = () => {
@@ -81,6 +81,7 @@ const Navbar = () => {
           transition={{ delay: 0.4, duration: 0.5 }}
           className="flex items-center gap-4"
         >
+          <ToggleButton />
           <div className="relative">
             {/* Profile */}
             {user && (
@@ -89,6 +90,7 @@ const Navbar = () => {
                 className="w-8 h-8 border border-pink-400/80 shadow-[0_0_10px_2px_rgba(244,114,182,0.4)] bg-white"
                 src={user.photoURL || profile}
                 alt="User"
+                title={user.displayName}
               />
             )}
 
@@ -179,7 +181,6 @@ const Navbar = () => {
           )}
 
           {/* Toggle icon */}
-          <ToggleButton />
         </motion.div>
       </div>
     </motion.nav>

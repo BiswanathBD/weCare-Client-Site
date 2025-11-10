@@ -7,8 +7,8 @@ body {
 }
 
 .btn-primary {
-  padding: 6px 12px;
-  border-radius: 20px;
+  padding: 4px 12px;
+  border-radius: 8px;
   font-weight: 600;
   color: #fff;
   background: linear-gradient(to right, #ad70e9, #ed6fae);
@@ -19,7 +19,7 @@ body {
 /* ✨ Hover Glow Effect */
 .btn-primary:hover {
   opacity: 0.95;
-  box-shadow: 0 0 40px rgba(255, 85, 255, 0.3);
+  box-shadow: 0 0 40px rgba(255, 85, 255, 0.5);
 }
 
 .btn-secondary {

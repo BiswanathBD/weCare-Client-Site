@@ -1,13 +1,16 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { motion } from "motion/react";
-import { AuthContext } from "../Context/AuthContext";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
+import useAuth from "../Hooks/useAuth";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
 
 const CreateEvent = () => {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
   const [eventDate, setEventDate] = useState(null);
+  const navigate = useNavigate();
 
   // event categories
   const eventTypes = [
@@ -43,10 +46,23 @@ const CreateEvent = () => {
       .post("http://localhost:3000/event", newEvent, {
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${user.accessToken}`,
         },
       })
-      .then((data) => console.log(data))
-      .catch((error) => console.log(error));
+      .then((res) => {
+        const data = res.data;
+        console.log(data);
+        if (data.insertedId) {
+          Swal.fire({
+            title: "Event Create Successful",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          navigate("/upcomingEvents");
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
