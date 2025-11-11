@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 motion;
 import { CalendarDays, MapPin } from "lucide-react";
@@ -27,6 +27,18 @@ const EventCard = ({ event }) => {
     creatorPhotoURL,
   } = event;
 
+  useEffect(() => {
+    axiosInstance.get(`/isJoined/${user.email}/${_id}`, {
+      headers:{
+        Authorization : `Bearer ${user.accessToken}`
+      }
+    }).then((res) => {
+      if (res.data.length > 0) {
+        setJoined(true);
+      }
+    });
+  }, [axiosInstance, user, _id]);
+
   const formattedDate = new Date(eventDate).toLocaleDateString("en-GB", {
     year: "numeric",
     month: "long",
@@ -42,7 +54,6 @@ const EventCard = ({ event }) => {
       eventId: id,
       userEmail: user.email,
     };
-    console.log(newJoin);
     axiosInstance
       .post("/joinEvent", newJoin, {
         headers: {
@@ -113,10 +124,10 @@ const EventCard = ({ event }) => {
           </div>
         </div>
 
-        {/* Buttons */}
+        {/* join btn */}
         <div className="flex gap-3 mt-5">
           {joined ? (
-            <motion.button className="flex-1 px-4 py-2 rounded-lg border border-purple-400/40 text-sm font-medium bg-violet-500 text-white text-nowrap transition-all">
+            <motion.button className="flex-1 px-4 py-2 rounded-lg border border-purple-400/40 text-sm font-medium bg-purple-500/20 text-white/50 text-nowrap transition-all">
               Joined
             </motion.button>
           ) : (

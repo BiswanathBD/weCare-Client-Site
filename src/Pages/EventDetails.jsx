@@ -19,13 +19,28 @@ const EventDetails = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axiosInstance(`/event/${id}`)
+    axiosInstance
+      .get(`/event/${id}`)
       .then((data) => {
         setEvent(data.data);
         setLoading(false);
       })
       .catch((error) => console.log(error));
   }, [axiosInstance, id]);
+
+  useEffect(() => {
+    axiosInstance
+      .get(`/isJoined/${user.email}/${id}`, {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      })
+      .then((res) => {
+        if (res.data.length > 0) {
+          setJoined(true);
+        }
+      });
+  }, [axiosInstance, user, id]);
 
   const handleJoin = (id) => {
     if (!user) {
@@ -44,8 +59,6 @@ const EventDetails = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
-
         if (res.data.insertedId) {
           setJoined(true);
         }
@@ -162,9 +175,7 @@ const EventDetails = () => {
             </div>
 
             {joined ? (
-              <motion.button
-                className="px-6! py-3! rounded-2xl bg-purple-400/20 border border-purple-400/30 font-semibold"
-              >
+              <motion.button className="px-6! py-3! rounded-2xl bg-purple-400/20 border border-purple-400/30 font-semibold">
                 Joined
               </motion.button>
             ) : (

@@ -106,6 +106,7 @@ const Navbar = () => {
               `}
             >
               <Link
+                to={"/"}
                 onClick={() => setDropShow(!dropShow)}
                 className="flex items-center gap-2 md:hidden"
               >
@@ -113,6 +114,7 @@ const Navbar = () => {
               </Link>
 
               <Link
+                to={"/upcomingEvents"}
                 onClick={() => setDropShow(!dropShow)}
                 className="flex items-center gap-2 md:hidden"
               >
@@ -130,6 +132,7 @@ const Navbar = () => {
               </Link>
 
               <Link
+                to={"/manageEvents"}
                 onClick={() => setDropShow(!dropShow)}
                 className="flex items-center gap-2"
               >

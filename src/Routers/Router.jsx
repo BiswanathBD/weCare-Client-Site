@@ -7,7 +7,8 @@ import CreateEvent from "../Private/CreateEvent";
 import PrivateRoute from "../Private/PrivateRoute";
 import UpcomingEvents from "../Pages/UpcomingEvents";
 import EventDetails from "../Pages/EventDetails";
-import JoinedEvents from "../Pages/JoinedEvents";
+import JoinedEvents from "../Private/JoinedEvents";
+import ManageEvents from "../Private/ManageEvents";
 
 const router = createBrowserRouter([
   {
@@ -18,22 +19,27 @@ const router = createBrowserRouter([
         index: true,
         element: <HomePage />,
       },
+
       {
         path: "/upcomingEvents",
         element: <UpcomingEvents />,
       },
+
       {
         path: "/eventDetails/:id",
         element: <EventDetails />,
       },
+
       {
         path: "/register",
         element: <Register />,
       },
+
       {
         path: "/login",
         element: <Login />,
       },
+
       {
         path: "/createEvent",
         element: (
@@ -42,11 +48,21 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+
+      {
+        path: "/manageEvents",
+        element: (
+          <PrivateRoute>
+            <ManageEvents />
+          </PrivateRoute>
+        ),
+      },
+
       {
         path: "/joinedEvent/user/:userEmail",
         element: (
           <PrivateRoute>
-            <JoinedEvents></JoinedEvents>
+            <JoinedEvents />
           </PrivateRoute>
         ),
       },

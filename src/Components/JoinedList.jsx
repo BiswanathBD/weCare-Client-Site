@@ -42,8 +42,6 @@ const JoinedList = ({ e, joinedEvents, setJoinedEvents }) => {
   });
 
   const handleRemoveJoin = (id) => {
-    console.log(id);
-
     axiosInstance
       .delete(`joinedEvent/${id}`, {
         headers: {
@@ -51,8 +49,6 @@ const JoinedList = ({ e, joinedEvents, setJoinedEvents }) => {
         },
       })
       .then((res) => {
-        console.log(res.data);
-
         if (res.data.deletedCount === 1) {
           toast.success("Removed Successfully");
           const newJoinedEvents = joinedEvents.filter((ev) => ev._id !== id);
@@ -65,7 +61,7 @@ const JoinedList = ({ e, joinedEvents, setJoinedEvents }) => {
     <motion.div
       whileHover={{ scale: 1.02, y: -4 }}
       transition={{ type: "spring", stiffness: 200 }}
-      className="flex flex-col sm:flex-row items-center sm:items-stretch gap-4 p-4 rounded-2xl border border-pink-400/20 bg-linear-to-r from-purple-500/10 via-purple-600/10 to-pink-400/10"
+      className="flex flex-col sm:flex-row items-center sm:items-stretch gap-4 p-4 rounded-2xl border border-pink-400/20 bg-linear-to-r from-purple-500/10 via-purple-600/10 to-pink-400/10 h-full"
     >
       <div className="w-full sm:w-48 h-40 rounded-xl overflow-hidden shrink-0 shadow-md">
         <img
@@ -76,9 +72,9 @@ const JoinedList = ({ e, joinedEvents, setJoinedEvents }) => {
       </div>
 
       <div className="flex flex-col justify-between flex-1">
-        <div>
-          <h2 className="text-xl font-semibold mb-1">{title}</h2>
+        <h2 className="text-2xl font-semibold mb-1">{title}</h2>
 
+        <div className="flex sm:flex-col gap-4 sm:gap-0">
           <div className="flex items-center gap-2 text-sm mb-1 text-gray-400">
             <CalendarDays size={15} className="text-pink-400" />
             <span>{formattedDate}</span>
@@ -102,7 +98,7 @@ const JoinedList = ({ e, joinedEvents, setJoinedEvents }) => {
             className="w-8 h-8 rounded-full border border-pink-400/40"
           />
           <p className="flex flex-col">
-            <span className="font-semibold">{creatorName}</span>
+            <span className="font-semibold text-sm">{creatorName}</span>
             <span className="text-sm text-gray-400">{creatorEmail}</span>
           </p>
         </div>
@@ -116,7 +112,7 @@ const JoinedList = ({ e, joinedEvents, setJoinedEvents }) => {
           backgroundColor: "rgba(236,72,153,0.15)",
         }}
         whileTap={{ scale: 0.95 }}
-        className="mt-3 sm:mt-0 sm:self-center px-5 py-2 rounded-lg border border-pink-500/40 font-medium hover:text-white hover:border-pink-500 bg-pink-500/10 transition-all"
+        className="mt-3 w-full sm:w-fit sm:mt-0 sm:self-center px-5 py-2 rounded-lg border border-pink-500/40 font-medium hover:text-white hover:border-pink-500 bg-pink-500/10 transition-all"
       >
         Remove
       </motion.button>
