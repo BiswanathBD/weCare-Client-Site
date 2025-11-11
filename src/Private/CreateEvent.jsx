@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { motion } from "motion/react";
+motion
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import axios from "axios";
 import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
@@ -13,7 +13,6 @@ const CreateEvent = () => {
   const [eventDate, setEventDate] = useState(null);
   const navigate = useNavigate();
   const axiosInstance = useAxios();
-  console.log(eventDate);
   
 
   // event categories

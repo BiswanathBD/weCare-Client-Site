@@ -4,6 +4,7 @@ import useAuth from "../Hooks/useAuth";
 import Loader from "../Components/Loader";
 import JoinedList from "../Components/JoinedList";
 import { motion } from "motion/react";
+motion;
 
 const JoinedEvents = () => {
   const { user } = useAuth();

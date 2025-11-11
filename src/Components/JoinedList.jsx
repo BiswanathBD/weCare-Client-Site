@@ -3,8 +3,9 @@ import useAxios from "../Hooks/useAxios";
 import useAuth from "../Hooks/useAuth";
 import defaultProfile from "../assets/profile.png";
 import defaultThumbnail from "../assets/thumbnail.png";
-import { CalendarDays, MapPin, TagIcon, XCircle } from "lucide-react";
+import { CalendarDays, MapPin, TagIcon } from "lucide-react";
 import { motion } from "framer-motion";
+motion;
 import toast from "react-hot-toast";
 
 const JoinedList = ({ e, joinedEvents, setJoinedEvents }) => {
@@ -109,7 +110,6 @@ const JoinedList = ({ e, joinedEvents, setJoinedEvents }) => {
         onClick={() => handleRemoveJoin(e._id)}
         whileHover={{
           scale: 1.05,
-          backgroundColor: "rgba(236,72,153,0.15)",
         }}
         whileTap={{ scale: 0.95 }}
         className="mt-3 w-full sm:w-fit sm:mt-0 sm:self-center px-5 py-2 rounded-lg border border-pink-500/40 font-medium hover:text-white hover:border-pink-500 bg-pink-500/10 transition-all"

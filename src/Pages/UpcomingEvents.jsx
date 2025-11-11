@@ -30,9 +30,9 @@ const UpcomingEvents = () => {
     });
   }, [axiosInstance, search]);
 
+  // filtered events
   const handleFilterChange = (e) => {
     const value = e.target.value;
-    console.log(value);
     if (value === "all") {
       axiosInstance.get("/events").then((res) => {
         setUpcomingEvents(res.data);
