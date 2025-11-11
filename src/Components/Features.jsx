@@ -51,27 +51,26 @@ const featuresData = [
 
 const Features = () => {
   return (
-    <section className="py-16 ">
-      <div className="max-w-6xl mx-auto px-6">
-        <h3 className="text-3xl md:text-4xl font-bold text-center bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-12">
+    <section className="py-12">
+      <div className="px-6">
+        <h3 className="text-3xl md:text-4xl font-bold text-center bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-16">
           Application Features
         </h3>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 justify-between gap-8">
           {featuresData.map((feature, index) => {
             return (
               <motion.div
                 initial={{ opacity: 0}}
                 whileInView={{ opacity: 1}}
                 transition={{
-                  duration: 0.5,
-                  delay: index * 0.1,
-                  ease: "easeOut",
+                  duration: 0.8,
+                  delay: index * 0.2,
                 }}
                 key={index}
                 className="bg-linear-to-br from-purple-500/3 to-pink-400/5 hover:to-pink-400/20 transition-all border border-purple-400/2 rounded-2xl p-6 shadow-lg h-full relative"
               >
-                <div className="absolute -top-5 right-1/2 translate-x-1/2 flex items-center justify-center w-14 h-14 mx-auto drop-shadow-[0_0_10px_rgba(236,72,153,0.6)]">
+                <div className="absolute -top-5 right-1/2 translate-x-1/2 flex items-center justify-center mx-auto drop-shadow-[0_0_10px_rgba(236,72,153,0.6)]">
                   <feature.icon size={50} />
                 </div>
                 <h3 className="text-lg font-semibold text-pink-400 text-center mt-8 mb-2">

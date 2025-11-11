@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "motion/react";
-motion
+motion;
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import useAuth from "../Hooks/useAuth";
@@ -13,7 +13,6 @@ const CreateEvent = () => {
   const [eventDate, setEventDate] = useState(null);
   const navigate = useNavigate();
   const axiosInstance = useAxios();
-  
 
   // event categories
   const eventTypes = [
@@ -31,7 +30,7 @@ const CreateEvent = () => {
     "Training",
   ];
 
-  const handleCreateEvent = (e) => {
+  const handleCreateEvent = async (e) => {
     e.preventDefault();
     const form = e.target;
     const newEvent = {
@@ -45,11 +44,14 @@ const CreateEvent = () => {
       creatorEmail: form.creatorEmail.value,
       creatorPhotoURL: form.creatorPhotoURL.value,
     };
+
+    const token = await user.getIdToken();
+
     axiosInstance
       .post("/event", newEvent, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${user.accessToken}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((res) => {

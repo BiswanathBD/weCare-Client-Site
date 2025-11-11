@@ -3,6 +3,7 @@ import useAuth from "../Hooks/useAuth";
 import useAxios from "../Hooks/useAxios";
 import Loader from "../Components/Loader";
 import { motion } from "motion/react";
+motion
 import MyEventList from "../Components/MyEventList";
 
 const ManageEvents = () => {

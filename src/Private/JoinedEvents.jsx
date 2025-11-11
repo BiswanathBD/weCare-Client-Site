@@ -4,6 +4,7 @@ import useAuth from "../Hooks/useAuth";
 import Loader from "../Components/Loader";
 import JoinedList from "../Components/JoinedList";
 import { motion } from "motion/react";
+import NoDataFound from "../Components/NoDataFound";
 motion;
 
 const JoinedEvents = () => {
@@ -37,24 +38,28 @@ const JoinedEvents = () => {
 
       {/* event list */}
       <div className="grid xl:grid-cols-2 gap-4">
-        {joinedEvents.map((e, index) => (
-          <motion.div
-            key={e._id}
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.4,
-              delay: index * 0.2,
-              ease: "easeOut",
-            }}
-          >
-            <JoinedList
-              e={e}
-              joinedEvents={joinedEvents}
-              setJoinedEvents={setJoinedEvents}
-            />
-          </motion.div>
-        ))}
+        {joinedEvents ? (
+          joinedEvents.map((e, index) => (
+            <motion.div
+              key={e._id}
+              initial={{ opacity: 0, y: 25 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.4,
+                delay: index * 0.2,
+                ease: "easeOut",
+              }}
+            >
+              <JoinedList
+                e={e}
+                joinedEvents={joinedEvents}
+                setJoinedEvents={setJoinedEvents}
+              />
+            </motion.div>
+          ))
+        ) : (
+          <NoDataFound />
+        )}
       </div>
     </div>
   );

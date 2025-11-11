@@ -94,7 +94,7 @@ const JoinedList = ({ e, joinedEvents, setJoinedEvents }) => {
 
         <div className="flex items-center gap-3 mt-3">
           <img
-            src={defaultProfile}
+            src={user.photoURL || defaultProfile}
             alt={creatorName}
             className="w-8 h-8 rounded-full border border-pink-400/40"
           />

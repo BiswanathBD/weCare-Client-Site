@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import DatePicker from "react-datepicker";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import useAxios from "../Hooks/useAxios";
 import useAuth from "../Hooks/useAuth";
 import Loader from "../Components/Loader";
+import toast from "react-hot-toast";
 motion;
 
 const EditEvent = () => {
@@ -14,10 +15,10 @@ const EditEvent = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
   const [event, setEvent] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axiosInstance.get(`/event/${id}`).then((res) => {
-      console.log(res.data);
       setEvent(res.data);
       setLoading(false);
       if (res.data.eventDate) {
@@ -44,7 +45,7 @@ const EditEvent = () => {
     "Training",
   ];
 
-  const handleCreateEvent = (e) => {
+  const handleEditEvent = async (e) => {
     e.preventDefault();
     const form = e.target;
 
@@ -56,10 +57,20 @@ const EditEvent = () => {
       location: form.location.value,
       eventDate,
     };
-    
+
+    const token = await user.getIdToken();
     axiosInstance
-      .put(`/updateEvent/${event._id}`, updatedEvent)
-      .then((res) => console.log(res.data));
+      .put(`/updateEvent/${event._id}`, updatedEvent, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        if (res.data.modifiedCount === 1) {
+          toast.success("Edited Successfully");
+          navigate("/manageEvents");
+        }
+      });
   };
 
   return (
@@ -73,7 +84,7 @@ const EditEvent = () => {
         Update Event
       </h2>
 
-      <form onSubmit={handleCreateEvent} className="space-y-5 create-event">
+      <form onSubmit={handleEditEvent} className="space-y-5 create-event">
         {/* title and category */}
         <div className="grid md:grid-cols-2 gap-4">
           <div>

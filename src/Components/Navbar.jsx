@@ -11,6 +11,7 @@ import {
   BiSolidCalendarWeek,
 } from "react-icons/bi";
 import { motion } from "framer-motion";
+motion
 import toast from "react-hot-toast";
 import useAuth from "../Hooks/useAuth";
 
