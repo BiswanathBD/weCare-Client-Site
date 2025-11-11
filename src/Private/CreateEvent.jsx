@@ -6,11 +6,15 @@ import axios from "axios";
 import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
+import useAxios from "../Hooks/useAxios";
 
 const CreateEvent = () => {
   const { user } = useAuth();
   const [eventDate, setEventDate] = useState(null);
   const navigate = useNavigate();
+  const axiosInstance = useAxios();
+  console.log(eventDate);
+  
 
   // event categories
   const eventTypes = [
@@ -42,17 +46,15 @@ const CreateEvent = () => {
       creatorEmail: form.creatorEmail.value,
       creatorPhotoURL: form.creatorPhotoURL.value,
     };
-    axios
-      .post("http://localhost:3000/event", newEvent, {
+    axiosInstance
+      .post("/event", newEvent, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.accessToken}`,
         },
       })
       .then((res) => {
-        const data = res.data;
-        console.log(data);
-        if (data.insertedId) {
+        if (res.data.insertedId) {
           Swal.fire({
             title: "Event Create Successful",
             icon: "success",
@@ -141,7 +143,7 @@ const CreateEvent = () => {
           </div>
         </div>
 
-        {/* Creator Info - auto filed as user data */}
+        {/* creator Info - auto filed as user data */}
         <div className="grid md:grid-cols-3 gap-4">
           <div>
             <label className="block text-sm mb-1">Creator Name</label>
@@ -176,7 +178,7 @@ const CreateEvent = () => {
           </div>
         </div>
 
-        {/* Thumbnail */}
+        {/* thumbnail */}
         <div>
           <label className="block text-sm mb-1 ">Event Thumbnail URL</label>
           <input

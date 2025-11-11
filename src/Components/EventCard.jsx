@@ -28,15 +28,17 @@ const EventCard = ({ event }) => {
   } = event;
 
   useEffect(() => {
-    axiosInstance.get(`/isJoined/${user.email}/${_id}`, {
-      headers:{
-        Authorization : `Bearer ${user.accessToken}`
-      }
-    }).then((res) => {
-      if (res.data.length > 0) {
-        setJoined(true);
-      }
-    });
+    axiosInstance
+      .get(`/isJoined/${user.email}/${_id}`, {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      })
+      .then((res) => {
+        if (res.data.length > 0) {
+          setJoined(true);
+        }
+      });
   }, [axiosInstance, user, _id]);
 
   const formattedDate = new Date(eventDate).toLocaleDateString("en-GB", {
@@ -53,6 +55,7 @@ const EventCard = ({ event }) => {
     const newJoin = {
       eventId: id,
       userEmail: user.email,
+      eventDate,
     };
     axiosInstance
       .post("/joinEvent", newJoin, {

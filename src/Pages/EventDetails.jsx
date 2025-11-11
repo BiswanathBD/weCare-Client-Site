@@ -50,7 +50,9 @@ const EventDetails = () => {
     const newJoin = {
       eventId: id,
       userEmail: user.email,
+      eventDate: event.eventDate,
     };
+
     axiosInstance
       .post("/joinEvent", newJoin, {
         headers: {
