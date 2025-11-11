@@ -87,7 +87,7 @@ const Navbar = () => {
             {user && (
               <img
                 onClick={() => setDropShow(!dropShow)}
-                className="w-8 h-8 border border-pink-400/80 shadow-[0_0_10px_2px_rgba(244,114,182,0.4)] bg-white"
+                className="w-10 h-10 rounded-full border border-pink-400/80 shadow-[0_0_10px_2px_rgba(244,114,182,0.4)] bg-white"
                 src={user.photoURL || profile}
                 alt="User"
                 title={user.displayName}

@@ -6,6 +6,7 @@ import { motion } from "motion/react";
 import useAuth from "../Hooks/useAuth";
 import useAxios from "../Hooks/useAxios";
 import Swal from "sweetalert2";
+import { Link } from "react-router";
 motion;
 
 const MyEventList = ({ event, myEvents, setMyEvents }) => {
@@ -88,12 +89,12 @@ const MyEventList = ({ event, myEvents, setMyEvents }) => {
           </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-end gap-3 mt-4">
-            <button
-              onClick={() => alert("Edit feature coming soon")}
+            <Link
+              to={`/updateEvent/${_id}`}
               className="px-3 py-1.5 text-sm rounded-lg bg-purple-500/20 hover:bg-purple-500/40 text-purple-300 flex items-center gap-1"
             >
               <Edit size={14} /> Edit
-            </button>
+            </Link>
             <button
               onClick={() => handleDelete(_id)}
               className="px-3 py-1.5 text-sm rounded-lg bg-pink-500/20 hover:bg-pink-500/40 text-pink-300 flex items-center gap-1"
