@@ -61,14 +61,14 @@ const Features = () => {
           {featuresData.map((feature, index) => {
             return (
               <motion.div
-                initial={{ opacity: 0}}
-                whileInView={{ opacity: 1}}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 transition={{
                   duration: 0.8,
-                  delay: index * 0.1,
+                  delay: index * 0.2,
                 }}
                 key={index}
-                className="bg-linear-to-br from-purple-500/3 to-pink-400/5 hover:to-pink-400/20 transition-all border border-purple-400/2 rounded-2xl p-6 shadow-lg h-full relative"
+                className="bg-linear-to-br from-purple-500/3 to-pink-400/5 hover:to-pink-400/20 border border-purple-400/2 rounded-2xl p-6 shadow-lg h-full relative"
               >
                 <div className="absolute -top-5 right-1/2 translate-x-1/2 flex items-center justify-center mx-auto drop-shadow-[0_0_10px_rgba(236,72,153,0.6)]">
                   <feature.icon size={50} />

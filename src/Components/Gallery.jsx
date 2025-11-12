@@ -33,9 +33,9 @@ const Gallery = () => {
         Our Gallery
       </h3>
 
-      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+      <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-8">
         <motion.img
-          className="md:col-span-2 md:row-span-2 w-full h-full object-cover rounded-2xl hover:shadow-[0_0_25px_rgba(236,72,153,0.6)] border-2 border-pink-400/20 hover:border-white"
+          className="col-span-2 row-span-2 w-full h-full object-cover rounded-sm sm:rounded-xl hover:shadow-[0_0_25px_rgba(236,72,153,0.6)] border-2 border-pink-400/20 hover:border-white"
           src={gallery1.thumbnail || defaultImg}
           alt={gallery1.title}
           whileHover={{
@@ -49,7 +49,7 @@ const Gallery = () => {
             key={gallery._id}
             src={gallery.thumbnail || defaultImg}
             alt={gallery.title}
-            className="w-full h-full object-cover rounded-2xl hover:shadow-[0_0_20px_rgba(236,72,153,0.6)] border border-pink-400/20 hover:border-white"
+            className="w-full h-full object-cover rounded-sm sm:rounded-xl hover:shadow-[0_0_20px_rgba(236,72,153,0.6)] border border-pink-400/20 hover:border-white"
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.4 }}
           />

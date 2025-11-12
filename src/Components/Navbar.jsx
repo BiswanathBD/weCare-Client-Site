@@ -11,7 +11,7 @@ import {
   BiSolidCalendarWeek,
 } from "react-icons/bi";
 import { motion } from "framer-motion";
-motion
+motion;
 import toast from "react-hot-toast";
 import useAuth from "../Hooks/useAuth";
 
@@ -80,10 +80,10 @@ const Navbar = () => {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.5 }}
-          className="flex items-center gap-4"
+          className="flex items-center gap-3"
         >
           <ToggleButton />
-          <div className="relative">
+          <div className="relative group z-100">
             {/* Profile */}
             {user && (
               <img
@@ -91,9 +91,11 @@ const Navbar = () => {
                 className="w-10 h-10 rounded-full border border-pink-400/80 shadow-[0_0_10px_2px_rgba(244,114,182,0.4)] bg-white"
                 src={user.photoURL || profile}
                 alt="User"
-                title={user.displayName}
               />
             )}
+
+            {/* hover user name show */}
+            <p className="absolute top-1/2 -translate-y-1/2 text-nowrap right-8 bg-pink-400 px-3 py-1 rounded-full opacity-0 pointer-events-none group-hover:opacity-100 group-hover:right-10 transition-all">{user?.displayName}</p>
 
             {/* dropdown menu */}
             <div
@@ -142,7 +144,7 @@ const Navbar = () => {
               </Link>
 
               <Link
-                to={`/joinedEvent/user/${user.email}`}
+                to={`/joinedEvent/user/${user?.email}`}
                 onClick={() => setDropShow(!dropShow)}
                 className="flex items-center gap-2"
               >
@@ -166,7 +168,7 @@ const Navbar = () => {
                       {user.displayName}
                     </h5>
                     <p className="text-[8px] text-gray-400 wrap-break-word">
-                      {user.email}
+                      {user?.email}
                     </p>
                   </div>
                 </div>
