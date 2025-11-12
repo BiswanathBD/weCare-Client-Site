@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { motion } from "motion/react";
-motion;
+import { motion } from "framer-motion";
+motion
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import useAuth from "../Hooks/useAuth";
@@ -135,6 +135,7 @@ const CreateEvent = () => {
           <div>
             <label className="block text-sm mb-1 ">Event Date</label>
             <DatePicker
+              required
               selected={eventDate}
               onChange={(date) => setEventDate(date)}
               minDate={new Date()}

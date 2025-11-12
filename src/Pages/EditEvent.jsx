@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import DatePicker from "react-datepicker";
 import { useNavigate, useParams } from "react-router";
 import useAxios from "../Hooks/useAxios";

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useAxios from "../Hooks/useAxios";
 import defaultImg from "../assets/thumbnail.png";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 motion;
 
 const Gallery = () => {

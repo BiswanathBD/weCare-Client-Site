@@ -6,6 +6,7 @@ import { CalendarDays, MapPin } from "lucide-react";
 import defaultProfile from "../assets/profile.png";
 import defaultThumbnail from "../assets/thumbnail.png";
 import { motion } from "framer-motion";
+motion
 import useAuth from "../Hooks/useAuth";
 
 const EventDetails = () => {

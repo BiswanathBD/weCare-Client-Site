@@ -3,7 +3,7 @@ import Navbar from "./Navbar";
 import { Outlet } from "react-router";
 import Footer from "./Footer";
 import { AuthContext } from "../Context/AuthContext";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { Toaster } from "react-hot-toast";
 
 const Root = () => {

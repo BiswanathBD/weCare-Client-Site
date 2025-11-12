@@ -7,7 +7,7 @@ import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { updateProfile } from "firebase/auth";
 import { Link, Navigate, useNavigate } from "react-router";
 import Swal from "sweetalert2";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
 const Register = () => {
   const { user, setUser, googleSignIn, signUpEmailPass, loading } =

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import logo from "../assets/logo.png";
 import profile from "../assets/profile.png";
 import { Link, NavLink } from "react-router";
@@ -18,16 +18,30 @@ import useAuth from "../Hooks/useAuth";
 const Navbar = () => {
   const { user, setUser, loading, logOut, isDark } = useAuth();
   const [dropShow, setDropShow] = useState(false);
+  const dropdownRef = useRef(null);
 
   const handleLogOut = () => {
     logOut()
       .then(() => {
         toast.success("You are Logged Out");
         setUser(null);
-        setDropShow(false)
+        setDropShow(false);
       })
       .catch((error) => toast.error(error.code));
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropShow(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   if (loading) return;
 
@@ -84,22 +98,27 @@ const Navbar = () => {
           className="flex items-center gap-3"
         >
           <ToggleButton />
-          <div className="relative group z-100">
+          <div className="relative" ref={dropdownRef}>
             {/* Profile */}
-            {user && (
-              <img
-                onClick={() => setDropShow(!dropShow)}
-                className="w-10 h-10 rounded-full border border-pink-400/80 shadow-[0_0_10px_2px_rgba(244,114,182,0.4)] bg-white"
-                src={user.photoURL || profile}
-                alt="User"
-              />
-            )}
+            <div className="group">
+              {user && (
+                <img
+                  onClick={() => setDropShow(!dropShow)}
+                  className="w-10 h-10 rounded-full border border-pink-400/80 shadow-[0_0_10px_2px_rgba(244,114,182,0.4)] bg-white"
+                  src={user.photoURL || profile}
+                  alt="User"
+                />
+              )}
 
-            {/* hover user name show */}
-            <p className="absolute top-1/2 -translate-y-1/2 text-nowrap right-8 bg-pink-400 px-3 py-1 rounded-full opacity-0 pointer-events-none group-hover:opacity-100 group-hover:right-10 transition-all">{user?.displayName}</p>
+              {/* hover user name show */}
+              <p className="absolute top-0 text-nowrap right-8 bg-pink-400 px-2 text-sm rounded-sm opacity-0 pointer-events-none group-hover:opacity-100 group-hover:right-11 transition-all">
+                {user?.displayName}
+              </p>
+            </div>
 
             {/* dropdown menu */}
             <div
+              id="dropdown"
               className={`absolute p-4  right-1/2 translate-x-1/2 z-100 border border-pink-400/40 box-shadow rounded-lg backdrop-blur-3xl flex flex-col gap-4 transition-all
               ${isDark ? "bg-black/90" : "bg-white/90"}
               ${

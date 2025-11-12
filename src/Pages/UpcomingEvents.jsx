@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import useAxios from "../Hooks/useAxios";
 import Loader from "../Components/Loader";
 import EventCard from "../Components/EventCard";
-import { motion } from "motion/react";
-motion;
+import { motion } from "framer-motion";
+motion
 import useAuth from "../Hooks/useAuth";
 import { Filter, Search } from "lucide-react";
 

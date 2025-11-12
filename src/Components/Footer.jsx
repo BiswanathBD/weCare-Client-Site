@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { AuthContext } from "../Context/AuthContext";
 import { FaFacebookF, FaInstagram, FaTwitter, FaGithub } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
@@ -13,7 +13,7 @@ const Footer = () => {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-      className='mt-8 py-10 bg-linear-to-bl from-[#1b131d] to-black backdrop-blur-xl text-white border-t border-pink-400/10'
+      className="mt-8 py-10 bg-linear-to-bl from-[#1b131d] to-black backdrop-blur-xl text-white border-t border-pink-400/10"
     >
       <div className="container mx-auto px-4 md:px-10 lg:px-20 flex flex-col md:flex-row justify-between items-center gap-6">
         {/* Logo & Brand */}

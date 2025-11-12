@@ -1,7 +1,6 @@
 <h1 align="center">🌿✨ WeCare — Volunteer Event Management Platform ✨🌿</h1>
 
 <p align="center">
-  <a href="https://wecare-biswanath.netlify.app/"><img src="https://api.netlify.com/api/v1/badges/9f4b12a5-b5e3-49a2-8f0a-1234567890/deploy-status" alt="Netlify Status"></a>
   <img src="https://img.shields.io/badge/Made%20with-React-61DAFB?logo=react&logoColor=white" alt="React" />
   <img src="https://img.shields.io/badge/Auth-Firebase-FFCA28?logo=firebase&logoColor=black" alt="Firebase" />
   <img src="https://img.shields.io/badge/Database-MongoDB-47A248?logo=mongodb&logoColor=white" alt="MongoDB" />

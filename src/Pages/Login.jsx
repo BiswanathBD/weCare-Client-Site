@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { FcGoogle } from "react-icons/fc";
 import { Link, Navigate, useLocation, useNavigate } from "react-router";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 motion;
 
 const Login = () => {

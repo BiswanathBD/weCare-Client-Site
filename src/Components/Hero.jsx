@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
+motion;
 import { AuthContext } from "../Context/AuthContext";
 import heroImg from "../assets/hero.webp";
 import { Link } from "react-router";
-import Swal from "sweetalert2";
 
 const Hero = () => {
   const { isDark } = useContext(AuthContext);

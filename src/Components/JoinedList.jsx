@@ -24,7 +24,7 @@ const JoinedList = ({ e, joinedEvents, setJoinedEvents }) => {
       .catch((err) => console.error(err));
   }, [axiosInstance, e]);
 
-  if (loading || !event) return;
+  if (loading) return;
 
   const {
     thumbnail,
@@ -34,6 +34,7 @@ const JoinedList = ({ e, joinedEvents, setJoinedEvents }) => {
     category,
     creatorName,
     creatorEmail,
+    creatorPhotoURL,
   } = event;
 
   const formattedDate = new Date(eventDate).toLocaleDateString("en-GB", {
@@ -94,7 +95,7 @@ const JoinedList = ({ e, joinedEvents, setJoinedEvents }) => {
 
         <div className="flex items-center gap-3 mt-3">
           <img
-            src={user.photoURL || defaultProfile}
+            src={creatorPhotoURL || defaultProfile}
             alt={creatorName}
             className="w-8 h-8 rounded-full border border-pink-400/40"
           />
