@@ -65,7 +65,7 @@ const Features = () => {
                 whileInView={{ opacity: 1}}
                 transition={{
                   duration: 0.8,
-                  delay: index * 0.2,
+                  delay: index * 0.1,
                 }}
                 key={index}
                 className="bg-linear-to-br from-purple-500/3 to-pink-400/5 hover:to-pink-400/20 transition-all border border-purple-400/2 rounded-2xl p-6 shadow-lg h-full relative"

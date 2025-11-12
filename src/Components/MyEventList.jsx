@@ -48,8 +48,7 @@ const MyEventList = ({ event, myEvents, setMyEvents }) => {
 
   return (
     <motion.div
-      whileHover={{ scale: 1.02, y: -4 }}
-      transition={{ type: "spring", stiffness: 200 }}
+      whileHover={{ scale: 1.02 }}
       className="flex flex-col sm:flex-row items-center sm:items-stretch gap-4 p-4 rounded-2xl border border-pink-400/20 bg-linear-to-r from-purple-500/10 via-purple-600/10 to-pink-400/10 h-full"
     >
       {/* image */}
