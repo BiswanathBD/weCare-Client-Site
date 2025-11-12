@@ -29,9 +29,9 @@ const EventCard = ({ event }) => {
 
   useEffect(() => {
     axiosInstance
-      .get(`/isJoined/${user.email}/${_id}`, {
+      .get(`/isJoined/${user?.email}/${_id}`, {
         headers: {
-          Authorization: `Bearer ${user.accessToken}`,
+          Authorization: `Bearer ${user?.accessToken}`,
         },
       })
       .then((res) => {
@@ -54,7 +54,7 @@ const EventCard = ({ event }) => {
     }
     const newJoin = {
       eventId: id,
-      userEmail: user.email,
+      userEmail: user?.email,
       eventDate,
     };
     axiosInstance

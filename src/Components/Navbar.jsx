@@ -24,6 +24,7 @@ const Navbar = () => {
       .then(() => {
         toast.success("You are Logged Out");
         setUser(null);
+        setDropShow(false)
       })
       .catch((error) => toast.error(error.code));
   };

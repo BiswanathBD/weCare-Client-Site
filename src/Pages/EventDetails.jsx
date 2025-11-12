@@ -30,9 +30,9 @@ const EventDetails = () => {
 
   useEffect(() => {
     axiosInstance
-      .get(`/isJoined/${user.email}/${id}`, {
+      .get(`/isJoined/${user?.email}/${id}`, {
         headers: {
-          Authorization: `Bearer ${user.accessToken}`,
+          Authorization: `Bearer ${user?.accessToken}`,
         },
       })
       .then((res) => {
@@ -49,7 +49,7 @@ const EventDetails = () => {
     }
     const newJoin = {
       eventId: id,
-      userEmail: user.email,
+      userEmail: user?.email,
       eventDate: event.eventDate,
     };
 
@@ -57,7 +57,7 @@ const EventDetails = () => {
       .post("/joinEvent", newJoin, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${user.accessToken}`,
+          Authorization: `Bearer ${user?.accessToken}`,
         },
       })
       .then((res) => {

@@ -3,7 +3,7 @@ import { AuthContext } from "../Context/AuthContext";
 import toast from "react-hot-toast";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { FcGoogle } from "react-icons/fc";
-import { Link, Navigate, useLocation } from "react-router";
+import { Link, Navigate, useLocation, useNavigate } from "react-router";
 import { motion } from "motion/react";
 motion;
 
@@ -12,7 +12,7 @@ const Login = () => {
     useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const { state } = useLocation();
-
+  const navigate = useNavigate();
   if (user) return <Navigate to={state || "/"} />;
   if (loading) return;
 
@@ -26,21 +26,25 @@ const Login = () => {
         toast.success("You are logged in");
         setUser(result.user);
         setLoading(false);
+        navigate(state || "/");
       })
       .catch((error) => {
         if (error.code === "auth/invalid-credential") {
           toast.error("Invalid Email or Password");
-        }else{
-          console.log(error)
+        } else {
+          console.log(error);
         }
       });
   };
 
   // google sign in
   const handleGoogleSignIn = () => {
-    googleSignIn().then((result) =>
-      setUser(result.user).catch((error) => toast.error(error.code))
-    );
+    googleSignIn()
+      .then((result) => {
+        setUser(result.user);
+        navigate(state || "/");
+      })
+      .catch((error) => toast.error(error.code));
   };
 
   return (

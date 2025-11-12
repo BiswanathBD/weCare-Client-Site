@@ -47,13 +47,15 @@ const Hero = () => {
             </motion.button>
           </Link>
 
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.97 }}
-            className="btn-primary md:hidden px-6! py-3! rounded-xl! transition-all w-fit"
-          >
-            Upcoming Events
-          </motion.button>
+          <Link to={"/upcomingEvents"}>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.97 }}
+              className="btn-primary md:hidden px-6! py-3! rounded-xl! transition-all w-fit"
+            >
+              Upcoming Events
+            </motion.button>
+          </Link>
 
           <motion.button
             whileHover={{ scale: 1.05 }}
