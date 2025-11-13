@@ -1,7 +1,6 @@
 import React from "react";
 import defaultThumbnail from "../assets/thumbnail.png";
 import { CalendarDays, Edit, MapPin, TagIcon, Trash2 } from "lucide-react";
-
 import { motion } from "framer-motion";
 import useAuth from "../Hooks/useAuth";
 import useAxios from "../Hooks/useAxios";

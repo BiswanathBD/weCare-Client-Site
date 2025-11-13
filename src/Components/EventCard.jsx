@@ -7,6 +7,7 @@ import defaultThumbnail from "../assets/thumbnail.png";
 import { Link, useNavigate } from "react-router";
 import useAuth from "../Hooks/useAuth";
 import useAxios from "../Hooks/useAxios";
+import toast from "react-hot-toast";
 
 const EventCard = ({ event }) => {
   const { user } = useAuth();
@@ -67,6 +68,7 @@ const EventCard = ({ event }) => {
       .then((res) => {
         if (res.data.insertedId) {
           setJoined(true);
+          toast.success("Joined Successfully");
         }
       })
       .catch((error) => console.log(error));

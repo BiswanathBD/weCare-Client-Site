@@ -6,8 +6,9 @@ import { CalendarDays, MapPin } from "lucide-react";
 import defaultProfile from "../assets/profile.png";
 import defaultThumbnail from "../assets/thumbnail.png";
 import { motion } from "framer-motion";
-motion
+motion;
 import useAuth from "../Hooks/useAuth";
+import toast from "react-hot-toast";
 
 const EventDetails = () => {
   const { id } = useParams();
@@ -64,6 +65,7 @@ const EventDetails = () => {
       .then((res) => {
         if (res.data.insertedId) {
           setJoined(true);
+          toast.success("Joined Successfully");
         }
       })
       .catch((error) => console.log(error));
