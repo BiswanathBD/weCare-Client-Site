@@ -102,6 +102,7 @@ const Login = () => {
           >
             <FcGoogle size={20} /> Sign in with Google
           </button>
+
           <p className="text-center mt-6 text-sm text-pink-400/50">
             Don't have an account?{" "}
             <Link to={"/register"} className="font-semibold text-pink-400 ml-1">

@@ -10,11 +10,15 @@ import EventDetails from "../Pages/EventDetails";
 import JoinedEvents from "../Private/JoinedEvents";
 import ManageEvents from "../Private/ManageEvents";
 import EditEvent from "../Pages/EditEvent";
+import ErrorPage from "../Pages/ErrorPage";
+import About from "../Pages/About";
+import Contact from "../Pages/Contact";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root></Root>,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -75,6 +79,18 @@ const router = createBrowserRouter([
             <JoinedEvents />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/about-us",
+        element: <About />,
+      },
+      {
+        path: "/contact-us",
+        element: <Contact />,
+      },
+      {
+        path: "/about-us",
+        element: <About />,
       },
     ],
   },

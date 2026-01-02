@@ -6,6 +6,15 @@ body {
   font-family: "Inter", sans-serif;
 }
 
+.nav a:hover {
+  color: #ed6fae;
+  transition: all 0.3s ease;
+}
+.nav .active {
+  color: #ed6fae;
+  transition: all 0.3s ease;
+}
+
 .btn-primary {
   padding: 6px 16px;
   border-radius: 8px;
@@ -25,7 +34,7 @@ body {
 .btn-secondary {
   border: 1px solid #ed6fae;
   padding: 6px 12px;
-  border-radius: 20px;
+  border-radius: 8px;
   font-weight: 600;
   transition: all 0.3s ease;
   cursor: pointer;
@@ -78,7 +87,7 @@ input {
 .create-event textarea {
   width: 100%;
   background-color: rgba(255, 255, 255, 0.05);
-  padding: 12px;
+  padding: 8px 12px;
   border-radius: 8px;
   border: 1px solid #c084fc25;
 }
@@ -88,6 +97,11 @@ input {
 .create-event textarea:focus {
   outline: none;
   border: 1px solid #c084fc7d;
+}
+
+.create-event input::placeholder,
+.create-event textarea::placeholder {
+  font-size: small;
 }
 
 .react-datepicker-wrapper,

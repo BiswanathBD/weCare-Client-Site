@@ -3,17 +3,21 @@ import logo from "../assets/logo.png";
 import profile from "../assets/profile.png";
 import { Link, NavLink } from "react-router";
 import ToggleButton from "./ToggleBtn";
-import { TbHomeFilled } from "react-icons/tb";
-import {
-  BiSolidCalendarCheck,
-  BiSolidCalendarEdit,
-  BiSolidCalendarPlus,
-  BiSolidCalendarWeek,
-} from "react-icons/bi";
 import { motion } from "framer-motion";
 motion;
 import toast from "react-hot-toast";
 import useAuth from "../Hooks/useAuth";
+import { IoIosInformationCircleOutline } from "react-icons/io";
+import { HiOutlineHome } from "react-icons/hi2";
+import {
+  TbCalendarCog,
+  TbCalendarCheck,
+  TbCalendarPlus,
+  TbCalendarUp,
+  TbLayoutDashboard,
+} from "react-icons/tb";
+import { TiContacts } from "react-icons/ti";
+import { FaRegCircleQuestion } from "react-icons/fa6";
 
 const Navbar = () => {
   const { user, setUser, loading, logOut, isDark } = useAuth();
@@ -80,14 +84,38 @@ const Navbar = () => {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.5 }}
-          className="hidden md:flex gap-8 font-light bg-linear-to-r from-pink-400/10 via-transparent to-pink-400/8 px-4 md:px-8 xl:px-16 py-1 border-l-2 border-r-2 border-pink-400"
+          className="nav hidden text-sm lg:flex gap-4 font-light bg-linear-to-r from-pink-400/10 via-transparent to-pink-400/8 px-4 md:px-6 xl:px-8 py-1 border-l-2 border-r-2 border-pink-400"
         >
           <NavLink className="flex items-center gap-1" to={"/"}>
-            <TbHomeFilled size={18} color="#ed6fae" /> <span>Home</span>
+            <HiOutlineHome size={18} color="#ed6fae" /> <span>Home</span>
           </NavLink>
           <NavLink className="flex items-center gap-1" to={"/upcomingEvents"}>
-            <BiSolidCalendarWeek size={18} color="#ed6fae" />
+            <TbCalendarUp size={18} color="#ed6fae" />
             <span>Upcoming Events</span>
+          </NavLink>
+          <NavLink
+            to={"/about-us"}
+            onClick={() => setDropShow(!dropShow)}
+            className="flex items-center gap-1"
+          >
+            <IoIosInformationCircleOutline size={18} color="#ed6fae" />
+            <span>About Us</span>
+          </NavLink>
+          <NavLink
+            to={"/contact-us"}
+            onClick={() => setDropShow(!dropShow)}
+            className="flex items-center gap-1"
+          >
+            <TiContacts size={18} color="#ed6fae" />
+            <span>Contact Us</span>
+          </NavLink>
+          <NavLink
+            to={"/faq"}
+            onClick={() => setDropShow(!dropShow)}
+            className="flex items-center gap-1"
+          >
+            <FaRegCircleQuestion size={18} color="#ed6fae" />
+            <span>FAQ</span>
           </NavLink>
         </motion.div>
 
@@ -109,22 +137,17 @@ const Navbar = () => {
                   alt="User"
                 />
               )}
-
-              {/* hover user name show */}
-              <p className="absolute top-0 text-nowrap right-8 bg-pink-400 px-2 text-sm rounded-sm opacity-0 pointer-events-none group-hover:opacity-100 group-hover:right-11 transition-all">
-                {user?.displayName}
-              </p>
             </div>
 
             {/* dropdown menu */}
             <div
               id="dropdown"
-              className={`absolute p-4  right-1/2 translate-x-1/2 z-100 border border-pink-400/40 box-shadow rounded-lg backdrop-blur-3xl flex flex-col gap-4 transition-all
+              className={`absolute p-4  right-0 z-100 border border-pink-400/40 box-shadow rounded-lg backdrop-blur-3xl flex flex-col gap-4 transition-all
               ${isDark ? "bg-black/90" : "bg-white/90"}
               ${
                 dropShow
-                  ? "top-10 opacity-100"
-                  : "top-6 opacity-0 pointer-events-none"
+                  ? "top-14 opacity-100"
+                  : "top-8 opacity-0 pointer-events-none"
               }
               `}
             >
@@ -133,7 +156,7 @@ const Navbar = () => {
                 onClick={() => setDropShow(!dropShow)}
                 className="flex items-center gap-2 md:hidden"
               >
-                <TbHomeFilled size={18} color="#ed6fae" /> <span>Home</span>
+                <HiOutlineHome size={18} color="#ed6fae" /> <span>Home</span>
               </Link>
 
               <Link
@@ -141,7 +164,7 @@ const Navbar = () => {
                 onClick={() => setDropShow(!dropShow)}
                 className="flex items-center gap-2 md:hidden"
               >
-                <BiSolidCalendarWeek size={18} color="#ed6fae" />
+                <TbCalendarUp size={18} color="#ed6fae" />
                 <span>Upcoming Events</span>
               </Link>
 
@@ -150,7 +173,7 @@ const Navbar = () => {
                 to={"/createEvent"}
                 className="flex items-center gap-2"
               >
-                <BiSolidCalendarPlus size={18} color="#ed6fae" />
+                <TbCalendarPlus size={18} color="#ed6fae" />
                 <span>Create Event</span>
               </Link>
 
@@ -159,7 +182,7 @@ const Navbar = () => {
                 onClick={() => setDropShow(!dropShow)}
                 className="flex items-center gap-2"
               >
-                <BiSolidCalendarEdit size={18} color="#ed6fae" />
+                <TbCalendarCog size={18} color="#ed6fae" />
                 <span>Manage Events</span>
               </Link>
 
@@ -168,46 +191,79 @@ const Navbar = () => {
                 onClick={() => setDropShow(!dropShow)}
                 className="flex items-center gap-2"
               >
-                <BiSolidCalendarCheck size={18} color="#ed6fae" />
+                <TbCalendarCheck size={18} color="#ed6fae" />
                 <span>Joined Events</span>
+              </Link>
+              <Link
+                to={"/about-us"}
+                onClick={() => setDropShow(!dropShow)}
+                className="flex items-center gap-1"
+              >
+                <IoIosInformationCircleOutline size={18} color="#ed6fae" />
+                <span>About Us</span>
+              </Link>
+              <Link
+                to={"/contact-us"}
+                onClick={() => setDropShow(!dropShow)}
+                className="flex items-center gap-1"
+              >
+                <TiContacts size={18} color="#ed6fae" />
+                <span>Contact Us</span>
+              </Link>
+              <Link
+                to={"/faq"}
+                onClick={() => setDropShow(!dropShow)}
+                className="flex items-center gap-1"
+              >
+                <FaRegCircleQuestion size={18} color="#ed6fae" />
+                <span>FAQ</span>
+              </Link>
+              <Link
+                to={"/dashboard"}
+                onClick={() => setDropShow(!dropShow)}
+                className="flex items-center gap-1 border border-pink-400/20 rounded-md px-3 py-2 justify-center"
+              >
+                <TbLayoutDashboard size={18} color="#ed6fae" />
+                <span>Dashboard</span>
               </Link>
 
               {user && (
-                <div
-                  className={`mt-8 flex items-center gap-2 border border-pink-400/20 rounded-md p-2 w-full backdrop-blur-3xl
+                <div>
+                  <div
+                    className={`mt-8 flex items-center gap-2 border border-pink-400/20 rounded-md p-2 w-full backdrop-blur-3xl
                 ${isDark ? "bg-black" : "bg-white"}
                 `}
-                >
-                  <img
-                    className="w-8 h-8 rounded-full border border-pink-400/30 shrink-0"
-                    src={user.photoURL || profile}
-                    alt=""
-                  />
-                  <div className="flex-1 overflow-hidden">
-                    <h5 className="text-pink-400 font-semibold text-sm truncate">
-                      {user.displayName}
-                    </h5>
-                    <p className="text-[8px] text-gray-400 wrap-break-word">
-                      {user?.email}
-                    </p>
+                  >
+                    <img
+                      className="w-8 h-8 rounded-full border border-pink-400/30 shrink-0"
+                      src={user.photoURL || profile}
+                      alt=""
+                    />
+                    <div className="flex-1 overflow-hidden">
+                      <h5 className="text-pink-400 font-semibold text-sm truncate">
+                        {user.displayName}
+                      </h5>
+                      <p className="text-[8px] text-gray-400 wrap-break-word">
+                        {user?.email}
+                      </p>
+                    </div>
                   </div>
+
+                  <button
+                    onClick={handleLogOut}
+                    className="btn-primary w-full! mt-4"
+                  >
+                    Log Out
+                  </button>
                 </div>
               )}
             </div>
           </div>
-
-          {/* sign btn */}
-          {user ? (
-            <button onClick={handleLogOut} className="btn-primary">
-              Log Out
-            </button>
-          ) : (
+          {!user && (
             <Link to={"/login"} className="btn-primary">
               Login
             </Link>
           )}
-
-          {/* Toggle icon */}
         </motion.div>
       </div>
     </motion.nav>
