@@ -3,25 +3,20 @@ import logo from "../assets/logo.png";
 import profile from "../assets/profile.png";
 import { Link, NavLink, useNavigate } from "react-router";
 import ToggleButton from "./ToggleBtn";
-import { motion } from "framer-motion";
-motion;
+import { motion, useAnimation } from "framer-motion";
 import toast from "react-hot-toast";
 import useAuth from "../Hooks/useAuth";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import { HiOutlineHome } from "react-icons/hi2";
-import {
-  TbCalendarCog,
-  TbCalendarCheck,
-  TbCalendarPlus,
-  TbCalendarUp,
-  TbLayoutDashboard,
-} from "react-icons/tb";
+import { TbCalendarUp, TbLayoutDashboard } from "react-icons/tb";
 import { TiContacts } from "react-icons/ti";
-import { FaRegCircleQuestion } from "react-icons/fa6";
+import { FaBars } from "react-icons/fa6";
+import { IoIosArrowDown } from "react-icons/io";
 
 const Navbar = () => {
   const { user, setUser, loading, logOut, isDark } = useAuth();
   const navigate = useNavigate();
+  const navControls = useAnimation();
   const [dropShow, setDropShow] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -36,6 +31,12 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    navControls.start({
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] },
+    });
+
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setDropShow(false);
@@ -48,31 +49,29 @@ const Navbar = () => {
     };
   }, []);
 
-  const handleFAQClick = (e) => {
+  const handleNavigateToDashboard = async (e) => {
     if (e && e.preventDefault) e.preventDefault();
-    setDropShow(false);
-    if (window.location.pathname === "/") {
-      const el = document.getElementById("faq");
-      if (el) return el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-    navigate("/");
-    setTimeout(() => {
-      const el = document.getElementById("faq");
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 220);
+    await navControls.start({
+      opacity: 0,
+      y: -25,
+      transition: { duration: 0.45, ease: [0.25, 0.1, 0.25, 1] },
+    });
+
+    navigate("/dashboard");
   };
 
   if (loading) return;
 
   return (
     <motion.nav
-      className="sticky top-0 backdrop-blur-3xl z-50"
+      className={`sticky top-0 backdrop-blur-3xl z-50 bg-linear-to-r shadow-xl/4 ${
+        isDark
+          ? "from-[#1b131d] to-black text-white"
+          : "from-pink-100 to-pink-50 text-black"
+      }`}
       initial={{ opacity: 0, y: -25 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{
-        duration: 0.6,
-        ease: [0.25, 0.1, 0.25, 1],
-      }}
+      animate={navControls}
+      exit={{ opacity: 0, y: -25 }}
     >
       <div className="container mx-auto px-4 md:px-10 lg:px-20 my-4 flex justify-between items-center">
         {/* Logo */}
@@ -99,7 +98,7 @@ const Navbar = () => {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.5 }}
-          className="nav hidden text-sm lg:flex gap-4 font-light bg-linear-to-r from-pink-400/10 via-transparent to-pink-400/8 px-4 md:px-6 xl:px-8 py-1 border-l-2 border-r-2 border-pink-400"
+          className="nav hidden text-sm lg:flex gap-4 font-light bg-linear-to-r from-pink-400/10 via-transparent to-pink-400/8 px-4 md:px-6 xl:px-8 py-2 border-l-2 border-r-2 border-pink-400"
         >
           <NavLink className="flex items-center gap-1" to={"/"}>
             <HiOutlineHome size={18} color="#ed6fae" /> <span>Home</span>
@@ -109,14 +108,6 @@ const Navbar = () => {
             <span>Upcoming Events</span>
           </NavLink>
           <NavLink
-            to={"/about-us"}
-            onClick={() => setDropShow(!dropShow)}
-            className="flex items-center gap-1"
-          >
-            <IoIosInformationCircleOutline size={18} color="#ed6fae" />
-            <span>About Us</span>
-          </NavLink>
-          <NavLink
             to={"/contact-us"}
             onClick={() => setDropShow(!dropShow)}
             className="flex items-center gap-1"
@@ -124,14 +115,58 @@ const Navbar = () => {
             <TiContacts size={18} color="#ed6fae" />
             <span>Contact Us</span>
           </NavLink>
-          <a
-            href="/#faq"
-            onClick={(e) => handleFAQClick(e)}
+          <NavLink
+            to={"/about-us"}
+            onClick={() => setDropShow(!dropShow)}
             className="flex items-center gap-1"
           >
-            <FaRegCircleQuestion size={18} color="#ed6fae" />
-            <span>FAQ</span>
-          </a>
+            <IoIosInformationCircleOutline size={18} color="#ed6fae" />
+            <span>About Us</span>
+          </NavLink>
+          {user && (
+            <div className="group relative py-1">
+              <NavLink
+                className="flex items-center gap-1"
+                to={"/dashboard"}
+                onClick={(e) => handleNavigateToDashboard(e)}
+              >
+                <TbLayoutDashboard size={18} color="#ed6fae" />
+                <div className="flex items-end gap-0.5">
+                  <span>Dashboard</span>
+                  <span className="mb-px">
+                    <IoIosArrowDown />
+                  </span>
+                </div>
+              </NavLink>
+
+              <div
+                className={`absolute left-0 top-full text-nowrap rounded-md border border-pink-300/20 backdrop-blur-3xl hidden group-hover:flex flex-col z-50 pr-2
+                  ${isDark ? "bg-black/90" : "bg-white/95"}`}
+              >
+                <NavLink
+                  to={"/dashboard"}
+                  onClick={(e) => handleNavigateToDashboard(e)}
+                  className="px-3 py-2 hover:bg-pink-50 dark:hover:bg-white/5 flex items-center gap-2"
+                >
+                  Overview
+                </NavLink>
+
+                <NavLink
+                  to={"/dashboard/manageEvents"}
+                  className="px-3 py-2 hover:bg-pink-50 dark:hover:bg-white/5 flex items-center gap-2"
+                >
+                  Manage Events
+                </NavLink>
+
+                <NavLink
+                  to={`/dashboard/joinedEvent/user/${user?.email}`}
+                  className="px-3 py-2 hover:bg-pink-50 dark:hover:bg-white/5 flex items-center gap-2"
+                >
+                  Joined Events
+                </NavLink>
+              </div>
+            </div>
+          )}
         </motion.div>
 
         <motion.div
@@ -141,23 +176,41 @@ const Navbar = () => {
           className="flex items-center gap-3"
         >
           <ToggleButton />
+
+          {!user && (
+            <Link to={"/login"} className="btn-primary">
+              Login
+            </Link>
+          )}
+
           <div className="relative" ref={dropdownRef}>
             {/* Profile */}
-            <div className="group">
-              {user && (
-                <img
-                  onClick={() => setDropShow(!dropShow)}
-                  className="w-10 h-10 rounded-full border border-pink-400/80 shadow-[0_0_10px_2px_rgba(244,114,182,0.4)] bg-white"
-                  src={user.photoURL || profile}
-                  alt="User"
-                />
+            <div
+              onClick={() => setDropShow(!dropShow)}
+              className="cursor-pointer"
+            >
+              {user ? (
+                <div className="relative">
+                  <img
+                    className="w-10 h-10 rounded-full border border-pink-400/80 shadow-[0_0_10px_2px_rgba(244,114,182,0.4)] bg-white"
+                    src={user.photoURL || profile}
+                    alt="User"
+                  />
+                  <FaBars
+                    size={14}
+                    color="white"
+                    className={`bg-[#ed6fae] p-0.5 rounded-full absolute bottom-0 right-0 shadow`}
+                  />
+                </div>
+              ) : (
+                <FaBars size={24} className="lg:hidden" />
               )}
             </div>
 
             {/* dropdown menu */}
             <div
               id="dropdown"
-              className={`absolute p-4  right-0 z-100 border border-pink-400/40 box-shadow rounded-lg backdrop-blur-3xl flex flex-col gap-4 transition-all
+              className={`absolute p-4 right-0 z-100 border border-pink-400/40 box-shadow rounded-lg backdrop-blur-3xl flex flex-col gap-4 transition-all text-nowrap
               ${isDark ? "bg-black/90" : "bg-white/90"}
               ${
                 dropShow
@@ -166,89 +219,53 @@ const Navbar = () => {
               }
               `}
             >
-              <Link
-                to={"/"}
-                onClick={() => setDropShow(!dropShow)}
-                className="flex items-center gap-2 md:hidden"
-              >
+              <NavLink className="flex lg:hidden items-center gap-1" to={"/"}>
                 <HiOutlineHome size={18} color="#ed6fae" /> <span>Home</span>
-              </Link>
+              </NavLink>
 
-              <Link
+              <NavLink
+                className="flex lg:hidden items-center gap-1"
                 to={"/upcomingEvents"}
-                onClick={() => setDropShow(!dropShow)}
-                className="flex items-center gap-2 md:hidden"
               >
                 <TbCalendarUp size={18} color="#ed6fae" />
                 <span>Upcoming Events</span>
-              </Link>
+              </NavLink>
 
-              <Link
-                onClick={() => setDropShow(!dropShow)}
-                to={"/createEvent"}
-                className="flex items-center gap-2"
-              >
-                <TbCalendarPlus size={18} color="#ed6fae" />
-                <span>Create Event</span>
-              </Link>
-
-              <Link
-                to={"/manageEvents"}
-                onClick={() => setDropShow(!dropShow)}
-                className="flex items-center gap-2"
-              >
-                <TbCalendarCog size={18} color="#ed6fae" />
-                <span>Manage Events</span>
-              </Link>
-
-              <Link
-                to={`/joinedEvent/user/${user?.email}`}
-                onClick={() => setDropShow(!dropShow)}
-                className="flex items-center gap-2"
-              >
-                <TbCalendarCheck size={18} color="#ed6fae" />
-                <span>Joined Events</span>
-              </Link>
-              <Link
-                to={"/about-us"}
-                onClick={() => setDropShow(!dropShow)}
-                className="flex items-center gap-1"
-              >
-                <IoIosInformationCircleOutline size={18} color="#ed6fae" />
-                <span>About Us</span>
-              </Link>
-              <Link
+              <NavLink
                 to={"/contact-us"}
                 onClick={() => setDropShow(!dropShow)}
-                className="flex items-center gap-1"
+                className="flex lg:hidden items-center gap-1"
               >
                 <TiContacts size={18} color="#ed6fae" />
                 <span>Contact Us</span>
-              </Link>
-              <a
-                href="/#faq"
-                onClick={(e) => {
-                  setDropShow(false);
-                  handleFAQClick(e);
-                }}
-                className="flex items-center gap-1"
-              >
-                <FaRegCircleQuestion size={18} color="#ed6fae" />
-                <span>FAQ</span>
-              </a>
-              <Link
-                to={"/dashboard"}
+              </NavLink>
+
+              <NavLink
+                to={"/about-us"}
                 onClick={() => setDropShow(!dropShow)}
-                className="flex items-center gap-1 border border-pink-400/20 rounded-md px-3 py-2 justify-center"
+                className="flex lg:hidden items-center gap-1"
               >
-                <TbLayoutDashboard size={18} color="#ed6fae" />
-                <span>Dashboard</span>
-              </Link>
+                <IoIosInformationCircleOutline size={18} color="#ed6fae" />
+                <span>About Us</span>
+              </NavLink>
+              {user && (
+                <a
+                  href="/dashboard"
+                  onClick={(e) => {
+                    setDropShow(false);
+                    handleNavigateToDashboard(e);
+                  }}
+                  className="mb-8 mt-2 flex lg:hidden items-center gap-1 border border-pink-400/20 rounded-md px-3 py-2 justify-center"
+                >
+                  <TbLayoutDashboard size={18} color="#ed6fae" />
+                  <span>Dashboard</span>
+                </a>
+              )}
 
               {user && (
                 <div>
                   <div
-                    className={`mt-8 flex items-center gap-2 border border-pink-400/20 rounded-md p-2 w-full backdrop-blur-3xl
+                    className={`flex items-center gap-2 border border-pink-400/20 rounded-md p-2 w-full backdrop-blur-3xl
                 ${isDark ? "bg-black" : "bg-white"}
                 `}
                   >
@@ -277,11 +294,6 @@ const Navbar = () => {
               )}
             </div>
           </div>
-          {!user && (
-            <Link to={"/login"} className="btn-primary">
-              Login
-            </Link>
-          )}
         </motion.div>
       </div>
     </motion.nav>

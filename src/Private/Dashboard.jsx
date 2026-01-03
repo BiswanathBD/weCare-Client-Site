@@ -30,10 +30,10 @@ const Dashboard = () => {
         {/* Sidebar */}
         <aside
           className={`h-screen p-2 md:p-4 flex flex-col justify-between
-          w-20 md:w-auto
+          w-20 md:w-fit
           ${
             isDark
-              ? "bg-gradient-to-br from-black to-neutral-800"
+              ? "bg-linear-to-br from-black to-neutral-800"
               : "bg-white shadow-lg"
           }`}
         >

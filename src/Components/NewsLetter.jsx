@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { FiMail } from "react-icons/fi";
 import toast from "react-hot-toast";
 import newsletterImg from "../assets/newsletterImg.png";
@@ -7,17 +7,17 @@ const Newsletter = () => {
   const handleSubscribe = (e) => {
     e.preventDefault();
     toast.success("Subscribed successfully!");
-    // e.target.reset();
+    e.target.reset();
   };
 
   return (
-    <div className="flex justify-center items-center py-12 px-4 ">
-      <div className="w-full rounded-3xl bg-white/5 p-8 flex flex-col md:flex-row items-center justify-between gap-8">
+    <div className="flex justify-center items-center py-12">
+      <div className="w-full rounded-3xl p-8 flex flex-col md:flex-row items-center justify-between gap-8">
         <div className="flex justify-center">
           <img
             src={newsletterImg}
             alt="Newsletter"
-            className="w-full object-cover rounded-2xl shadow-lg"
+            className="w-full object-cover rounded-2xl"
           />
         </div>
 

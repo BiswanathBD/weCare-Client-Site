@@ -13,6 +13,8 @@ import EditEvent from "../Pages/EditEvent";
 import ErrorPage from "../Pages/ErrorPage";
 import About from "../Pages/About";
 import Contact from "../Pages/Contact";
+import Dashboard from "../Private/Dashboard";
+import DashboardHome from "../Private/DashboardHome";
 
 const router = createBrowserRouter([
   {
@@ -64,23 +66,6 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/manageEvents",
-        element: (
-          <PrivateRoute>
-            <ManageEvents />
-          </PrivateRoute>
-        ),
-      },
-
-      {
-        path: "/joinedEvent/user/:userEmail",
-        element: (
-          <PrivateRoute>
-            <JoinedEvents />
-          </PrivateRoute>
-        ),
-      },
-      {
         path: "/about-us",
         element: <About />,
       },
@@ -91,6 +76,28 @@ const router = createBrowserRouter([
       {
         path: "/about-us",
         element: <About />,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <Dashboard />
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <DashboardHome />,
+      },
+      {
+        path: "manageEvents",
+        element: <ManageEvents />,
+      },
+      {
+        path: "joinedEvent/user/:userEmail",
+        element: <JoinedEvents />,
       },
     ],
   },

@@ -9,14 +9,14 @@ const Hero = () => {
   const { isDark } = useContext(AuthContext);
 
   return (
-    <section className="relative flex flex-col md:flex-row items-center justify-between gap-10 py-12 container mx-auto px-4 md:px-10 rounded-xl border-pink-400/10">
+    <section className="relative flex flex-col md:flex-row items-center justify-between gap-10 py-12 px-4 rounded-xl border-pink-400/10">
       {/* animation circle */}
       <div className="absolute -top-20 -left-20 w-72 h-72 bg-pink-400/10 rounded-full blur-3xl animate-pulse"></div>
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-200/10 rounded-full blur-3xl animate-pulse"></div>
 
       <motion.div
         initial={{ opacity: 0, x: -50 }}
-        whileInView={{ opacity: 1, x: 0 }}
+        animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
         className="z-10 text-center md:text-left max-w-xl"
       >
@@ -73,7 +73,7 @@ const Hero = () => {
 
       <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 30 }}
-        whileInView={{ opacity: 1, scale: 1, y: 0 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
         className="relative z-10 w-full md:min-w-1/2 flex justify-center"
       >
