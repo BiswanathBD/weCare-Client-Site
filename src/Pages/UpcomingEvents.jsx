@@ -3,7 +3,7 @@ import useAxios from "../Hooks/useAxios";
 import Loader from "../Components/Loader";
 import EventCard from "../Components/EventCard";
 import { motion } from "framer-motion";
-motion
+motion;
 import useAuth from "../Hooks/useAuth";
 import { Filter, Search } from "lucide-react";
 
@@ -13,6 +13,8 @@ const UpcomingEvents = () => {
   const [upcomingEvents, setUpcomingEvents] = useState(null);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 12;
 
   // all upcoming data
   useEffect(() => {
@@ -30,6 +32,11 @@ const UpcomingEvents = () => {
     });
   }, [axiosInstance, search]);
 
+  // reset to first page when data changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [upcomingEvents]);
+
   // filtered events
   const handleFilterChange = (e) => {
     const value = e.target.value;
@@ -42,6 +49,23 @@ const UpcomingEvents = () => {
         setUpcomingEvents(res.data);
       });
     }
+  };
+
+  const handleSortChange = (e) => {
+    const value = e.target.value;
+    if (!upcomingEvents) return;
+    const sorted = [...upcomingEvents];
+    if (value === "date_asc") {
+      sorted.sort((a, b) => new Date(a.eventDate) - new Date(b.eventDate));
+    } else if (value === "date_desc") {
+      sorted.sort((a, b) => new Date(b.eventDate) - new Date(a.eventDate));
+    } else if (value === "name_asc") {
+      sorted.sort((a, b) => (a.title || "").localeCompare(b.title || ""));
+    } else if (value === "name_desc") {
+      sorted.sort((a, b) => (b.title || "").localeCompare(a.title || ""));
+    }
+    setUpcomingEvents(sorted);
+    setCurrentPage(1);
   };
 
   if (loading) return <Loader />;
@@ -106,28 +130,93 @@ const UpcomingEvents = () => {
               </select>
             </div>
           </div>
+          {/* sort select */}
+          <div className="flex justify-end">
+            <div className="relative w-fit">
+              <select
+                onChange={handleSortChange}
+                className="w-fit pl-3 pr-4 py-2 bg-white/10 border border-purple-400/20 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 text-gray-500"
+              >
+                <option value="">Sort By</option>
+                <option value="date_asc">Date (old → new)</option>
+                <option value="date_desc">Date (new → old)</option>
+                <option value="name_asc">Name (A → Z)</option>
+                <option value="name_desc">Name (Z → A)</option>
+              </select>
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 md:gap-12 xl:gap-16">
-          {upcomingEvents.map((event, index) => (
-            <motion.div
-              key={event._id}
-              initial={{ opacity: 0, y: 25 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.4,
-                delay: index * 0.2,
-                ease: "easeOut",
-              }}
-            >
-              <EventCard
-                event={event}
-                upcomingEvents={upcomingEvents}
-                setUpcomingEvents={setUpcomingEvents}
-              />
-            </motion.div>
-          ))}
+          {(() => {
+            // const total = (upcomingEvents && upcomingEvents.length) || 0;
+            // const totalPages = Math.max(1, Math.ceil(total / pageSize));
+            const start = (currentPage - 1) * pageSize;
+            const paged = upcomingEvents.slice(start, start + pageSize);
+
+            return paged.map((event, index) => (
+              <motion.div
+                key={event._id}
+                initial={{ opacity: 0, y: 25 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.4,
+                  delay: index * 0.12,
+                  ease: "easeOut",
+                }}
+              >
+                <EventCard
+                  event={event}
+                  upcomingEvents={upcomingEvents}
+                  setUpcomingEvents={setUpcomingEvents}
+                />
+              </motion.div>
+            ));
+          })()}
         </div>
+
+        {/* Pagination controls */}
+        {upcomingEvents && upcomingEvents.length > pageSize && (
+          <div className="flex items-center justify-center gap-3 my-16">
+            <button
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              className="px-3 py-1 rounded-md border border-pink-300/40"
+              disabled={currentPage === 1}
+            >
+              Prev
+            </button>
+
+            {Array.from({
+              length: Math.ceil(upcomingEvents.length / pageSize),
+            }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentPage(i + 1)}
+                className={`px-3 py-1 rounded-md border ${
+                  currentPage === i + 1
+                    ? "bg-pink-400/10 border-pink-400 text-pink-600"
+                    : " border-pink-300/40"
+                }`}
+              >
+                {i + 1}
+              </button>
+            ))}
+
+            <button
+              onClick={() =>
+                setCurrentPage((p) =>
+                  Math.min(Math.ceil(upcomingEvents.length / pageSize), p + 1)
+                )
+              }
+              className="px-3 py-1 rounded-md border border-pink-300/40"
+              disabled={
+                currentPage === Math.ceil(upcomingEvents.length / pageSize)
+              }
+            >
+              Next
+            </button>
+          </div>
+        )}
       </div>
     </motion.div>
   );

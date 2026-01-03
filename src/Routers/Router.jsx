@@ -57,15 +57,6 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/updateEvent/:id",
-        element: (
-          <PrivateRoute>
-            <EditEvent />
-          </PrivateRoute>
-        ),
-      },
-
-      {
         path: "/about-us",
         element: <About />,
       },
@@ -98,6 +89,10 @@ const router = createBrowserRouter([
       {
         path: "joinedEvent/user/:userEmail",
         element: <JoinedEvents />,
+      },
+      {
+        path: "updateEvent/:id",
+        element: <EditEvent />,
       },
     ],
   },

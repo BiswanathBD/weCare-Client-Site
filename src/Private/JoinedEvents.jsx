@@ -8,7 +8,7 @@ import NoDataFound from "../Components/NoDataFound";
 motion;
 
 const JoinedEvents = () => {
-  const { user } = useAuth();
+  const { user, isDark } = useAuth();
   const [loading, setLoading] = useState(true);
   const [joinedEvents, setJoinedEvents] = useState(null);
   const axiosInstance = useAxios();
@@ -28,44 +28,47 @@ const JoinedEvents = () => {
       });
   }, [axiosInstance, user]);
 
-  if (loading) return <Loader></Loader>;
+  if (loading) return <Loader />;
 
   return (
-    <div>
-      <h3 className="text-3xl font-black bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent w-fit mx-auto pb-4">
+    <div
+      className={`max-w-7xl mx-auto ${
+        isDark ? "text-gray-200" : "text-gray-800"
+      }`}
+    >
+      <h3 className="text-3xl md:text-4xl font-black text-center bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent w-fit mx-auto pb-4">
         Joined Events
       </h3>
-      {/* line */}
-      <div className="w-full h-px bg-linear-to-r from-transparent via-pink-400/30 to-transparent mb-12"></div>
+
+      <div className="w-full h-px bg-linear-to-r from-transparent via-pink-400/30 to-transparent mb-8"></div>
 
       {/* event list */}
-      <div className="grid grid-cols-2 gap-4">
-        {joinedEvents ? (
-          joinedEvents.map((e, index) => (
-            <div key={e._id}>
-              {e._id && (
-                <motion.div
-                  initial={{ opacity: 0, y: 25 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    duration: 0.4,
-                    delay: index * 0.2,
-                    ease: "easeOut",
-                  }}
-                >
-                  <JoinedList
-                    e={e}
-                    joinedEvents={joinedEvents}
-                    setJoinedEvents={setJoinedEvents}
-                  />
-                </motion.div>
-              )}
-            </div>
-          ))
-        ) : (
+      {joinedEvents && joinedEvents.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {joinedEvents.map((e, index) => (
+            <motion.div
+              key={e._id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.4,
+                delay: index * 0.08,
+                ease: "easeOut",
+              }}
+            >
+              <JoinedList
+                e={e}
+                joinedEvents={joinedEvents}
+                setJoinedEvents={setJoinedEvents}
+              />
+            </motion.div>
+          ))}
+        </div>
+      ) : (
+        <div className="py-8">
           <NoDataFound />
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

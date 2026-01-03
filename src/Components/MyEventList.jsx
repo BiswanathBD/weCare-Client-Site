@@ -21,28 +21,60 @@ const MyEventList = ({ event, myEvents, setMyEvents }) => {
     year: "numeric",
   });
 
-  const handleDelete = (eventId) => {
-    axiosInstance
-      .delete(`/events/${eventId}`, {
+  const handleDelete = async (eventId) => {
+    const confirm = await Swal.fire({
+      title: "Are you sure?",
+      text: "This will permanently delete the event.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (!confirm.isConfirmed) return;
+
+    try {
+      const req = axiosInstance.delete(`/events/${eventId}`, {
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
         },
-      })
-      .then((res) => {
-        if (res.data.deletedCount === 1) {
-          Swal.fire({
-            title: "Event Deleted Successfully",
-            icon: "success",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-
-          const remainingEvents = myEvents.filter(
-            (event) => event._id !== eventId
-          );
-          setMyEvents(remainingEvents);
-        }
       });
+
+      Swal.fire({
+        title: "Deleting...",
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading(),
+        showConfirmButton: false,
+      });
+
+      const res = await req;
+      Swal.close();
+
+      if (res.data && res.data.deletedCount === 1) {
+        Swal.fire({
+          title: "Event Deleted Successfully",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+        const remainingEvents = myEvents.filter(
+          (event) => event._id !== eventId
+        );
+        setMyEvents(remainingEvents);
+      } else {
+        Swal.fire({ title: "Nothing deleted", icon: "info" });
+      }
+    } catch (err) {
+      console.error(err);
+      Swal.close();
+      Swal.fire({
+        title: "Delete failed",
+        text: err?.message || "Something went wrong",
+        icon: "error",
+      });
+    }
   };
 
   return (
@@ -88,7 +120,7 @@ const MyEventList = ({ event, myEvents, setMyEvents }) => {
 
           <div className="flex flex-col sm:flex-row items-center justify-end gap-3 mt-4">
             <Link
-              to={`/updateEvent/${_id}`}
+              to={`/dashboard/updateEvent/${_id}`}
               className="px-3 py-1.5 text-sm rounded-lg bg-purple-500/20 hover:bg-purple-500/40 text-purple-300 flex items-center gap-1"
             >
               <Edit size={14} /> Edit

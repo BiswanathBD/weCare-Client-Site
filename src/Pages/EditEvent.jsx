@@ -59,18 +59,25 @@ const EditEvent = () => {
     };
 
     const token = await user.getIdToken();
-    axiosInstance
-      .put(`/updateEvent/${event._id}`, updatedEvent, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        if (res.data.modifiedCount === 1) {
-          toast.success("Edited Successfully");
-          navigate("/manageEvents");
+    const req = axiosInstance.put(`/updateEvent/${event._id}`, updatedEvent, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    toast.promise(req, {
+      loading: "Updating event...",
+      success: (res) => {
+        if (res.data && res.data.modifiedCount === 1) {
+          navigate("/dashboard/manageEvents");
+          return "Edited Successfully";
         }
-      });
+        return "No changes made";
+      },
+      error: (err) => err?.message || "Failed to update",
+    });
+
+    req.catch((err) => console.error(err));
   };
 
   return (
