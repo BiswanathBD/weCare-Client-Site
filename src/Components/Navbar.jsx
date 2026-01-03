@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import logo from "../assets/logo.png";
 import profile from "../assets/profile.png";
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import ToggleButton from "./ToggleBtn";
 import { motion } from "framer-motion";
 motion;
@@ -21,6 +21,7 @@ import { FaRegCircleQuestion } from "react-icons/fa6";
 
 const Navbar = () => {
   const { user, setUser, loading, logOut, isDark } = useAuth();
+  const navigate = useNavigate();
   const [dropShow, setDropShow] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -46,6 +47,20 @@ const Navbar = () => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
+
+  const handleFAQClick = (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+    setDropShow(false);
+    if (window.location.pathname === "/") {
+      const el = document.getElementById("faq");
+      if (el) return el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    navigate("/");
+    setTimeout(() => {
+      const el = document.getElementById("faq");
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 220);
+  };
 
   if (loading) return;
 
@@ -109,14 +124,14 @@ const Navbar = () => {
             <TiContacts size={18} color="#ed6fae" />
             <span>Contact Us</span>
           </NavLink>
-          <NavLink
-            to={"/faq"}
-            onClick={() => setDropShow(!dropShow)}
+          <a
+            href="/#faq"
+            onClick={(e) => handleFAQClick(e)}
             className="flex items-center gap-1"
           >
             <FaRegCircleQuestion size={18} color="#ed6fae" />
             <span>FAQ</span>
-          </NavLink>
+          </a>
         </motion.div>
 
         <motion.div
@@ -210,14 +225,17 @@ const Navbar = () => {
                 <TiContacts size={18} color="#ed6fae" />
                 <span>Contact Us</span>
               </Link>
-              <Link
-                to={"/faq"}
-                onClick={() => setDropShow(!dropShow)}
+              <a
+                href="/#faq"
+                onClick={(e) => {
+                  setDropShow(false);
+                  handleFAQClick(e);
+                }}
                 className="flex items-center gap-1"
               >
                 <FaRegCircleQuestion size={18} color="#ed6fae" />
                 <span>FAQ</span>
-              </Link>
+              </a>
               <Link
                 to={"/dashboard"}
                 onClick={() => setDropShow(!dropShow)}
