@@ -16,13 +16,13 @@ const Login = () => {
   const navigate = useNavigate();
 
   if (user) return <Navigate to={state || "/"} />;
-  if (loading) return;
+  if (loading) return null;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const form = e.target;
-    const email = form.email.value;
-    const password = form.password.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
     passwordSignIn(email, password)
       .then((result) => {
         toast.success("You are logged in");
@@ -33,8 +33,6 @@ const Login = () => {
       .catch((error) => {
         if (error.code === "auth/invalid-credential") {
           toast.error("Invalid Email or Password");
-        } else {
-          console.log(error);
         }
       });
   };
@@ -45,7 +43,6 @@ const Login = () => {
         setUser(result.user);
         navigate(state || "/");
       })
-      .catch((error) => toast.error(error.code));
   };
 
   const fillDemoCredentials = () => {
@@ -54,7 +51,7 @@ const Login = () => {
   };
 
   return (
-    <motion.nav initial={{ opacity: 0, y: 25 }} animate={{ opacity: 1, y: 0 }}>
+    <motion.div initial={{ opacity: 0, y: 25 }} animate={{ opacity: 1, y: 0 }}>
       <div className="flex flex-col items-center justify-center px-4 min-h-[80vh]">
         <h2 className="text-4xl font-bold mb-6 text-center tracking-wide">
           Welcome Back
@@ -62,6 +59,7 @@ const Login = () => {
 
         <div className="w-full max-w-md p-8 rounded-2xl shadow-lg border border-pink-200/20 backdrop-blur-sm">
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+            {/* Email */}
             <input
               type="email"
               name="email"
@@ -72,6 +70,7 @@ const Login = () => {
               required
             />
 
+            {/* Password */}
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
@@ -90,6 +89,7 @@ const Login = () => {
               </span>
             </div>
 
+            {/* Login Button */}
             <button
               type="submit"
               className="btn-primary mt-4 w-full bg-linear-to-r from-pink-400 to-pink-500 hover:from-pink-500 hover:to-pink-400 shadow-lg transition-all"
@@ -107,12 +107,14 @@ const Login = () => {
             </button>
           </form>
 
+          {/* OR Divider */}
           <div className="flex items-center gap-2 mt-6">
             <hr className="flex-1 border-gray-500/20" />
             <span className="text-gray-500/50">or</span>
             <hr className="flex-1 border-gray-500/20" />
           </div>
 
+          {/* Google Sign In */}
           <button
             onClick={handleGoogleSignIn}
             className="mt-4 w-full btn-secondary flex items-center justify-center gap-4"
@@ -120,15 +122,19 @@ const Login = () => {
             <FcGoogle size={20} /> Sign in with Google
           </button>
 
+          {/* Register Link */}
           <p className="text-center mt-6 text-sm text-pink-400/50">
             Don't have an account?{" "}
-            <Link to={"/register"} className="font-semibold text-pink-400 ml-1">
+            <Link
+              to={"/register"}
+              className="font-semibold text-pink-400 ml-1"
+            >
               Register
             </Link>
           </p>
         </div>
       </div>
-    </motion.nav>
+    </motion.div>
   );
 };
 
