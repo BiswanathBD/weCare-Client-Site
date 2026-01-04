@@ -13,8 +13,6 @@ const JoinedEvents = () => {
   const [joinedEvents, setJoinedEvents] = useState(null);
   const axiosInstance = useAxios();
 
-  console.log(joinedEvents);
-
   useEffect(() => {
     axiosInstance
       .get(`/joinedEvent/user/${user.email}`, {

@@ -85,7 +85,7 @@ const Dashboard = () => {
             <FaRegUser size={18} color="#ed6fae" />
             <span>My Profile</span>
           </NavLink>
-          <NavLink className="flex items-center gap-2" to={"/upcomingEvents"}>
+          <NavLink className="flex items-center gap-2" to={"/dashboard"}>
             <HiOutlineHome size={20} color="#ed6fae" />
             <span>Dashboard Home</span>
           </NavLink>
@@ -148,7 +148,7 @@ const Dashboard = () => {
         </aside>
 
         {/* Main Content */}
-        <div className="p-4 md:p-8 bg-white/3">
+        <div className="p-4 md:p-8 m-4 rounded-xl bg-white/3">
           <Outlet />
         </div>
       </div>
