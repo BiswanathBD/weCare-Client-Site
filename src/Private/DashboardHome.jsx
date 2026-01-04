@@ -35,15 +35,22 @@ const DashboardHome = () => {
       try {
         setLoading(true);
 
-        const createdRes = await axiosInstance.get(`/events/user/${user.email}`);
-        const joinedRes = await axiosInstance.get(`/joinedEvent/user/${user.email}`, {
-          headers: { Authorization: `Bearer ${user.accessToken}` },
-        });
+        const createdRes = await axiosInstance.get(
+          `/events/user/${user.email}`
+        );
+        const joinedRes = await axiosInstance.get(
+          `/joinedEvent/user/${user.email}`,
+          {
+            headers: { Authorization: `Bearer ${user.accessToken}` },
+          }
+        );
         const allRes = await axiosInstance.get("/events");
         const allEvents = Array.isArray(allRes.data) ? allRes.data : [];
 
         const now = new Date();
-        const upcoming = allEvents.filter(ev => ev.eventDate && new Date(ev.eventDate) > now);
+        const upcoming = allEvents.filter(
+          (ev) => ev.eventDate && new Date(ev.eventDate) > now
+        );
 
         const grouped = upcoming.reduce((acc, ev) => {
           if (!ev.category) return acc;
@@ -51,7 +58,7 @@ const DashboardHome = () => {
           return acc;
         }, {});
 
-        const chartData = Object.keys(grouped).map(key => ({
+        const chartData = Object.keys(grouped).map((key) => ({
           category: key,
           count: grouped[key],
         }));
@@ -112,7 +119,9 @@ const DashboardHome = () => {
                 </BarChart>
               </ResponsiveContainer>
             ) : (
-              <p className="text-gray-400 text-sm">No category data available</p>
+              <p className="text-gray-400 text-sm">
+                No category data available
+              </p>
             )}
           </div>
         </div>
@@ -120,7 +129,14 @@ const DashboardHome = () => {
         <div className="p-5 rounded-xl flex flex-col items-center bg-white/3">
           <h4 className="font-semibold mb-4">Participation</h4>
           <PieChart width={260} height={260}>
-            <Pie data={pieData} dataKey="value" cx="50%" cy="50%" outerRadius={90} label>
+            <Pie
+              data={pieData}
+              dataKey="value"
+              cx="50%"
+              cy="50%"
+              outerRadius={90}
+              label
+            >
               {pieData.map((_, i) => (
                 <Cell key={i} fill={COLORS[i % COLORS.length]} />
               ))}
@@ -134,11 +150,17 @@ const DashboardHome = () => {
         <h4 className="font-semibold mb-4">Your Latest Events</h4>
         {lastThreeEvents.length > 0 ? (
           <ul className="space-y-3">
-            {lastThreeEvents.map(ev => (
-              <li key={ev._id || ev.title} className="bg-white/5 p-3 rounded-lg flex justify-between items-center">
+            {lastThreeEvents.map((ev) => (
+              <li
+                key={ev._id || ev.title}
+                className="bg-white/5 p-3 rounded-lg flex justify-between items-center"
+              >
                 <div>
                   <p className="font-medium">{ev.title}</p>
-                  <p className="text-sm text-gray-500">{ev.category} | {new Date(ev.eventDate).toLocaleDateString()}</p>
+                  <p className="text-sm text-gray-500">
+                    {ev.category} |{" "}
+                    {new Date(ev.eventDate).toLocaleDateString()}
+                  </p>
                 </div>
                 <Link
                   to={`/eventDetails/${ev._id || ""}`}
@@ -150,7 +172,10 @@ const DashboardHome = () => {
             ))}
           </ul>
         ) : (
-          <NoDataFound/>
+          <div className="flex flex-col items-center">
+            <NoDataFound />{" "}
+            <Link to={'/createEvent'} className="btn-primary w-fit mb-20">Create Event</Link>
+          </div>
         )}
         <div className="mt-4 text-right">
           <Link

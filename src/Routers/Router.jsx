@@ -15,6 +15,7 @@ import About from "../Pages/About";
 import Contact from "../Pages/Contact";
 import Dashboard from "../Private/Dashboard";
 import DashboardHome from "../Private/DashboardHome";
+import DashboardProfile from "../Private/DashboardProfile";
 
 const router = createBrowserRouter([
   {
@@ -93,6 +94,10 @@ const router = createBrowserRouter([
       {
         path: "updateEvent/:id",
         element: <EditEvent />,
+      },
+      {
+        path: "profile",
+        element: <DashboardProfile />,
       },
     ],
   },

@@ -13,6 +13,7 @@ const Dashboard = () => {
   const { user, logOut, setUser, isDark } = useAuth();
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   const handleLogOut = () => {
     logOut()
@@ -24,6 +25,23 @@ const Dashboard = () => {
       .catch((err) => toast.error(err?.message || "Logout failed"));
   };
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Close dropdown when clicking a menu link
+  const handleLinkClick = () => setIsDropdownOpen(false);
+
   return (
     <div
       className={`min-h-screen flex flex-col bg-linear-to-br ${
@@ -34,15 +52,15 @@ const Dashboard = () => {
     >
       {/* navbar */}
       <nav className="flex justify-between items-center px-4 md:px-6 py-3 fixed top-0 left-0 right-0 z-50 backdrop-blur-3xl">
-        {/* Logo */}
         <Link to="/" className="flex items-center gap-2 justify-center">
           <img src={logo} alt="weCare" className="w-10 h-10" />
           <h4 className="hidden md:block text-2xl font-bold">
             we<span className="text-pink-400">Care</span>
           </h4>
         </Link>
+
         {/* profile with dropdown */}
-        <div className="relative">
+        <div className="relative" ref={dropdownRef}>
           <div
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             className="flex items-center gap-2 cursor-pointer"
@@ -69,31 +87,46 @@ const Dashboard = () => {
               />
             </div>
           </div>
-        </div>
 
-        {/* dropdown */}
-        <div
-          className={`absolute p-4 right-6 z-100 border border-pink-400/40 box-shadow rounded-lg backdrop-blur-3xl flex flex-col gap-4 transition-all text-nowrap
+          {/* dropdown menu */}
+          <div
+            className={`absolute p-4 right-6 z-100 border border-pink-400/40 box-shadow rounded-lg backdrop-blur-3xl flex flex-col gap-4 transition-all text-nowrap
             ${isDark ? "bg-black/90" : "bg-white/90"}
             ${
               isDropdownOpen
                 ? "top-16 opacity-100"
                 : "top-12 opacity-0 pointer-events-none"
             }`}
-        >
-          <NavLink className="flex items-center gap-2" to={"/upcomingEvents"}>
-            <FaRegUser size={18} color="#ed6fae" />
-            <span>My Profile</span>
-          </NavLink>
-          <NavLink className="flex items-center gap-2" to={"/dashboard"}>
-            <HiOutlineHome size={20} color="#ed6fae" />
-            <span>Dashboard Home</span>
-          </NavLink>
+          >
+            <NavLink
+              className="flex items-center gap-2"
+              to={"/dashboard/profile"}
+              onClick={handleLinkClick}
+            >
+              <FaRegUser size={18} color="#ed6fae" />
+              <span>My Profile</span>
+            </NavLink>
 
-          <div>
-            <button onClick={handleLogOut} className="btn-primary w-full! mt-4">
-              Log Out
-            </button>
+            <NavLink
+              className="flex items-center gap-2"
+              to={"/dashboard"}
+              onClick={handleLinkClick}
+            >
+              <HiOutlineHome size={20} color="#ed6fae" />
+              <span>Dashboard Home</span>
+            </NavLink>
+
+            <div>
+              <button
+                onClick={() => {
+                  handleLogOut();
+                  handleLinkClick();
+                }}
+                className="btn-primary w-full! mt-4"
+              >
+                Log Out
+              </button>
+            </div>
           </div>
         </div>
       </nav>
@@ -102,7 +135,6 @@ const Dashboard = () => {
         {/* Sidebar */}
         <aside className="p-2 lg:p-4 flex flex-col justify-between w-fit">
           <div>
-            {/* Navigation */}
             <nav className="flex flex-col gap-2 items-center lg:items-stretch">
               {[
                 {

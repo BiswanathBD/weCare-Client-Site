@@ -5,14 +5,16 @@ import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { FcGoogle } from "react-icons/fc";
 import { Link, Navigate, useLocation, useNavigate } from "react-router";
 import { motion } from "framer-motion";
-motion;
 
 const Login = () => {
   const { user, setUser, loading, setLoading, googleSignIn, passwordSignIn } =
     useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
+  const [demoEmail, setDemoEmail] = useState("");
+  const [demoPassword, setDemoPassword] = useState("");
   const { state } = useLocation();
   const navigate = useNavigate();
+
   if (user) return <Navigate to={state || "/"} />;
   if (loading) return;
 
@@ -37,7 +39,6 @@ const Login = () => {
       });
   };
 
-  // google sign in
   const handleGoogleSignIn = () => {
     googleSignIn()
       .then((result) => {
@@ -47,9 +48,13 @@ const Login = () => {
       .catch((error) => toast.error(error.code));
   };
 
+  const fillDemoCredentials = () => {
+    setDemoEmail("demo.user@gmail.com");
+    setDemoPassword("demoUser@1234");
+  };
+
   return (
     <motion.nav initial={{ opacity: 0, y: 25 }} animate={{ opacity: 1, y: 0 }}>
-      {" "}
       <div className="flex flex-col items-center justify-center px-4 min-h-[80vh]">
         <h2 className="text-4xl font-bold mb-6 text-center tracking-wide">
           Welcome Back
@@ -57,21 +62,24 @@ const Login = () => {
 
         <div className="w-full max-w-md p-8 rounded-2xl shadow-lg border border-pink-200/20 backdrop-blur-sm">
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-            {/* email */}
             <input
               type="email"
               name="email"
               placeholder="Email"
-              className={`w-full px-4 py-2 rounded-lg border border-pink-300/30 focus:ring-2 focus:ring-pink-400 transition-all bg-transparent placeholder:text-gray-400`}
+              value={demoEmail}
+              onChange={(e) => setDemoEmail(e.target.value)}
+              className="w-full px-4 py-2 rounded-lg border border-pink-300/30 focus:ring-2 focus:ring-pink-400 transition-all bg-transparent placeholder:text-gray-400"
               required
             />
-            {/* password */}
+
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
                 name="password"
                 placeholder="Password"
-                className={`w-full px-4 py-2 rounded-lg border border-pink-300/30 focus:ring-2 focus:ring-pink-400 transition-all bg-transparent placeholder:text-gray-400`}
+                value={demoPassword}
+                onChange={(e) => setDemoPassword(e.target.value)}
+                className="w-full px-4 py-2 rounded-lg border border-pink-300/30 focus:ring-2 focus:ring-pink-400 transition-all bg-transparent placeholder:text-gray-400"
                 required
               />
               <span
@@ -87,6 +95,15 @@ const Login = () => {
               className="btn-primary mt-4 w-full bg-linear-to-r from-pink-400 to-pink-500 hover:from-pink-500 hover:to-pink-400 shadow-lg transition-all"
             >
               Login
+            </button>
+
+            {/* Demo User Button */}
+            <button
+              type="button"
+              onClick={fillDemoCredentials}
+              className="mt-2 w-full bg-pink-100 text-pink-500 font-semibold py-2 rounded-lg hover:bg-pink-200 transition"
+            >
+              Fill Demo User
             </button>
           </form>
 
