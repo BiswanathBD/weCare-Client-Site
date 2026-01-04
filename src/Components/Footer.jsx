@@ -27,16 +27,22 @@ const Footer = () => {
         </div>
 
         <div className="flex gap-4 footer-nav">
-          <Link>
+          <Link
+            to={"https://www.facebook.com/Biswanath.Sarker.BD"}
+            target="blank"
+          >
             <FaFacebookF />
           </Link>
-          <Link>
+          <Link
+            to={"https://www.instagram.com/biswanath.sarker.bd/"}
+            target="blank"
+          >
             <FaInstagram />
           </Link>
-          <Link>
+          <Link to={"https://x.com/Biswanath08BD"} target="blank">
             <FaXTwitter />
           </Link>
-          <Link>
+          <Link to={"https://github.com/BiswanathBD"} target="blank">
             <FaGithub />
           </Link>
         </div>
